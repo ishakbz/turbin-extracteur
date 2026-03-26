@@ -186,52 +186,24 @@ document.getElementById("desk").innerText=livraison[w].desk;
 
 // إرسال واتساب
 function send(){
-let size=document.getElementById("size").value;
-let price=document.getElementById("price").innerText;
-let wilaya=document.getElementById("wilaya").value;
-let baladia=document.getElementById("baladia").value;
-let type=document.getElementById("type").value;
-let name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
+    let size = document.getElementById("size").value;
+    let price = document.getElementById("price").innerText;
+    let wilaya = document.getElementById("wilaya").value;
+    let baladia = document.getElementById("baladia").value;
+    let type = document.getElementById("type").value;
+    let name = document.getElementById("name").value;
+    let clientPhone = document.getElementById("phone").value; // رقم العميل
 
-if(!size||!wilaya||!baladia||!name||!phone){
-alert("عمر المعلومات");
-return;
-}
-
-let ship= type=="home" ? document.getElementById("home").innerText : document.getElementById("desk").innerText;
-
-let total=parseInt(price)+parseInt(ship);
-
-let msg=`طلب جديد:
-المقاس: ${size}
-السعر: ${price} دج
-الولاية: ${wilaya}
-البلدية: ${baladia}
-نوع التوصيل: ${type=="home"?"منزل":"مكتب"}
-سعر التوصيل: ${ship} دج
-المجموع: ${total} دج
-الاسم: ${name}
-`;
-
-function send(){
-    let size=document.getElementById("size").value;
-    let price=document.getElementById("price").innerText;
-    let wilaya=document.getElementById("wilaya").value;
-    let baladia=document.getElementById("baladia").value;
-    let type=document.getElementById("type").value;
-    let name=document.getElementById("name").value;
-    let phone=document.getElementById("phone").value; // juste info utilisateur
-
-    if(!size||!wilaya||!baladia||!name||!phone){
-        alert("عمر المعلومات");
+    if(!size || !wilaya || !baladia || !name || !clientPhone){
+        alert("عمر جميع المعلومات");
         return;
     }
 
-    let ship= type=="home" ? document.getElementById("home").innerText : document.getElementById("desk").innerText;
-    let total=parseInt(price)+parseInt(ship);
+    let ship = type=="home" ? document.getElementById("home").innerText : document.getElementById("desk").innerText;
+    let total = parseInt(price) + parseInt(ship);
 
-    let msg=`طلب جديد:
+    // رسالة جاهزة
+    let msg = `طلب جديد:
 المقاس: ${size}
 السعر: ${price} دج
 الولاية: ${wilaya}
@@ -240,14 +212,14 @@ function send(){
 سعر التوصيل: ${ship} دج
 المجموع: ${total} دج
 الاسم: ${name}
-رقم الهاتف: ${phone}`;
+رقم الهاتف: ${clientPhone}`;
 
-   let myNumber = "213778565501"; // <-- ton numéro vendeur correctement formaté
-window.open(`https://wa.me/${myNumber}?text=${encodeURIComponent(msg)}`, "_blank");
-}
-}
+    // رقم البائع الثابت بصيغة دولية
+    let vendeurNumber = "213778565501"; // <-- هنا الرقم ديالك
 
+    // فتح WhatsApp conversation مباشرة عند البائع
+    window.open(`https://wa.me/${vendeurNumber}?text=${encodeURIComponent(msg)}`, "_blank");
+}
 </script>
-
 </body>
 </html>
