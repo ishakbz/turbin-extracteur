@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>CLIMAT COOL</title>
+
+<style>
+body{font-family:Arial;background:#f4f4f4;direction:rtl;margin:0}
+header{background:#007bff;color:#fff;padding:15px;text-align:center;font-size:22px}
+.container{max-width:900px;margin:20px auto;background:#fff;padding:20px;border-radius:10px}
+
+img{
+  width:100%;
+  max-width:700px;
+  height:auto;
+  display:block;
+  margin:20px auto;
+  border-radius:10px;
+}
+
+video{
+  width:300%;
+  max-width:520px; 
+  height:520px;      
+  object-fit:cover;  
+  display:block;
+  margin:20px auto;
+  border-radius:10px;
+}
+.video-box{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  margin:30px 0;
+}
+
+.video-box video{
+  width:90% !important;     /* يكبر كامل */
+  max-width:800px;          /* الحد الأقصى */
+  height:400px;             /* الطول */
+  object-fit:cover;
+  border-radius:12px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+
+select,input{width:100%;padding:8px;margin-top:8px}
+button{background:#28a745;color:#fff;padding:10px;border:none;margin-top:10px;width:100%}
+</style>
+</head>
+
+<body>
+
+<header>CLIMAT COOL</header>
+
+<div class="container">
+
+<h2>مستخرج الهواء التوربيني</h2>
+
+<!-- صور -->
+<img id="img-top" src="images/100mm.jpg">
+<img id="img-bottom" src="images/100mm2.jpg">
+
+<!-- فيديو -->
+<div class="video-box">
+  <video controls autoplay muted loop>
+    <source src="vedio/demo.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- وصف -->
+<p>
+💨 المنتج متوفر<br>
+✔️ شفط قوي<br>
+✔️ صوت منخفض<br>
+✔️ ضد الرطوبة<br>
+🚚 توصيل 58 ولاية
+</p>
+
+<!-- المقاس -->
+<label>المقاس</label>
+<select id="size">
+<option value="">اختر</option>
+<option value="100mm" data-price="7500">100mm</option>
+<option value="125mm" data-price="9300">125mm</option>
+<option value="150mm" data-price="11000">150mm</option>
+<option value="200mm" data-price="12500">200mm</option>
+<option value="250mm" data-price="28500">250mm</option>
+<option value="315mm" data-price="39000">315mm</option>
+</select>
+
+<p>السعر: <span id="price">-</span> دج</p>
+
+<!-- الولاية -->
+<label>الولاية</label>
+<select id="wilaya">
+<option value="">اختر</option>
+<option>16 - الجزائر</option>
+<option>31 - وهران</option>
+<option>01 - أدرار</option>
+<option>05 - باتنة</option>
+<option>06 - بجاية</option>
+<option>07 - بسكرة</option>
+<option>09 - البليدة</option>
+<option>10 - البويرة</option>
+<option>13 - تلمسان</option>
+<option>19 - سطيف</option>
+<option>21 - سكيكدة</option>
+<option>23 - عنابة</option>
+<option>25 - قسنطينة</option>
+<option>27 - مستغانم</option>
+<option>29 - معسكر</option>
+<option>30 - ورقلة</option>
+</select>
+
+<p>🏠 توصيل منزل: <span id="home">-</span> دج</p>
+<p>🏢 توصيل مكتب: <span id="desk">-</span> دج</p>
+
+
+<label>نوع التوصيل</label>
+<select id="type">
+<option value="home">منزل</option>
+<option value="desk">مكتب</option>
+</select>
+
+
+<input id="name" placeholder="الاسم الكامل">
+<input id="baladia" placeholder="البلدية">
+<input id="phone" placeholder="رقم الهاتف">
+
+<button onclick="send()">إرسال الطلب عبر واتساب</button>
+
+</div>
+
+<script>
+
+
+const images={
+"100mm":{top:"images/100mm.jpg",bottom:"images/100mm-2.jpg"},
+"125mm":{top:"images/125mm.jpg",bottom:"images/125mm-2.jpg"},
+"150mm":{top:"images/150mm.jpg",bottom:"images/150mm-2.jpg"},
+"200mm":{top:"images/200mm.jpg",bottom:"images/200mm-2.jpg"},
+"250mm":{top:"images/250mm.jpg",bottom:"images/250mm-2.jpg"},
+"315mm":{top:"images/315mm.jpg",bottom:"images/315mm-2.jpg"}
+};
+
+
+const livraison={
+"16 - الجزائر":{home:400,desk:200},
+"31 - وهران":{home:700,desk:400},
+"01 - أدرار":{home:1100,desk:600},
+"05 - باتنة":{home:800,desk:400},
+"06 - بجاية":{home:700,desk:400},
+"07 - بسكرة":{home:900,desk:500},
+"09 - البليدة":{home:500,desk:250},
+"10 - البويرة":{home:650,desk:400},
+"13 - تلمسان":{home:800,desk:400},
+"19 - سطيف":{home:700,desk:400},
+"21 - سكيكدة":{home:700,desk:400},
+"23 - عنابة":{home:700,desk:400},
+"25 - قسنطينة":{home:700,desk:400},
+"27 - مستغانم":{home:700,desk:400},
+"29 - معسكر":{home:700,desk:400},
+"30 - ورقلة":{home:1000,desk:500}
+};
+
+
+document.getElementById("size").onchange=function(){
+let opt=this.options[this.selectedIndex];
+document.getElementById("price").innerText=opt.dataset.price||"-";
+
+let size=this.value;
+if(images[size]){
+document.getElementById("img-top").src=images[size].top;
+document.getElementById("img-bottom").src=images[size].bottom;
+}
+}
+
+
+document.getElementById("wilaya").onchange=function(){
+let w=this.value;
+if(livraison[w]){
+document.getElementById("home").innerText=livraison[w].home;
+document.getElementById("desk").innerText=livraison[w].desk;
+}
+}
+
+// إرسال واتساب
+function send(){
+let size=document.getElementById("size").value;
+let price=document.getElementById("price").innerText;
+let wilaya=document.getElementById("wilaya").value;
+let baladia=document.getElementById("baladia").value;
+let type=document.getElementById("type").value;
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+
+if(!size||!wilaya||!baladia||!name||!phone){
+alert("عمر المعلومات");
+return;
+}
+
+let ship= type=="home" ? document.getElementById("home").innerText : document.getElementById("desk").innerText;
+
+let total=parseInt(price)+parseInt(ship);
+
+let msg=`طلب جديد:
+المقاس: ${size}
+السعر: ${price} دج
+الولاية: ${wilaya}
+البلدية: ${baladia}
+نوع التوصيل: ${type=="home"?"منزل":"مكتب"}
+سعر التوصيل: ${ship} دج
+المجموع: ${total} دج
+الاسم: ${name}
+`;
+
+function send(){
+    let size=document.getElementById("size").value;
+    let price=document.getElementById("price").innerText;
+    let wilaya=document.getElementById("wilaya").value;
+    let baladia=document.getElementById("baladia").value;
+    let type=document.getElementById("type").value;
+    let name=document.getElementById("name").value;
+    let phone=document.getElementById("phone").value; // juste info utilisateur
+
+    if(!size||!wilaya||!baladia||!name||!phone){
+        alert("عمر المعلومات");
+        return;
+    }
+
+    let ship= type=="home" ? document.getElementById("home").innerText : document.getElementById("desk").innerText;
+    let total=parseInt(price)+parseInt(ship);
+
+    let msg=`طلب جديد:
+المقاس: ${size}
+السعر: ${price} دج
+الولاية: ${wilaya}
+البلدية: ${baladia}
+نوع التوصيل: ${type=="home"?"منزل":"مكتب"}
+سعر التوصيل: ${ship} دج
+المجموع: ${total} دج
+الاسم: ${name}
+رقم الهاتف: ${phone}`;
+
+   let myNumber = "213778565501"; // <-- ton numéro vendeur correctement formaté
+window.open(`https://wa.me/${myNumber}?text=${encodeURIComponent(msg)}`, "_blank");
+}
+}
+
+</script>
+
+</body>
+</html>
