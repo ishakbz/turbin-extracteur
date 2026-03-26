@@ -316,37 +316,35 @@ let type=document.getElementById("type").value;
 let ship= type=="home" ? parseInt(document.getElementById("home").innerText)||0 : parseInt(document.getElementById("desk").innerText)||0;
 document.getElementById("total").innerText=price+ship;
 }
-
-document.getElementById("size").onchange = function() {
+document.getElementById("size").onchange=function(){
     let opt = this.options[this.selectedIndex];
     document.getElementById("price").innerText = opt.dataset.price || "-";
 
-    let s = this.value; // size li ikhtar l-user
+    let s = this.value; // هاد s هو li ghadi nsta3ml
 
-    // update images
     if(images[s]){
         document.getElementById("img-top").src = images[s].top;
         document.getElementById("img-bottom").src = images[s].bottom;
     }
 
-    // update المساحة
+    updateTotal();
+
     const area = {
-      "100mm": "8-16",
-      "125mm": "10-20",
-      "150mm": "18-36",
-      "200mm": "25-50",
-      "250mm": "55-130",
-      "315mm": "90-200"
+      "100mm": "8-16m²",
+      "125mm": "10-20m²",
+      "150mm": "18-36m²",
+      "200mm": "25-50m²",
+      "250mm": "55-130m²",
+      "315mm": "90-200m²"
     };
 
-    // **Hna l-important:** concatenate " متر مربع"
-    document.getElementById("area").innerText = area[s] ? area[s] + " متر مربع" : "-";
-
-    // update total (ila kayn function)
-    updateTotal();
+    // **استعمال s بدل size**
+    if(area[s]){
+        document.getElementById("area").innerText = area[s];
+    } else {
+        document.getElementById("area").innerText = "-";
+    }
 };
-
-
 
 document.getElementById("type").onchange = updateTotal;
 
