@@ -90,26 +90,70 @@ button{background:#28a745;color:#fff;padding:10px;border:none;margin-top:10px;wi
 
 <p>السعر: <span id="price">-</span> دج</p>
 
-<!-- الولاية -->
+
 <label>الولاية</label>
 <select id="wilaya">
-<option value="">اختر</option>
-<option>16 - الجزائر</option>
-<option>31 - وهران</option>
+<option value="">اختر الولاية</option>
+
 <option>01 - أدرار</option>
+<option>02 - الشلف</option>
+<option>03 - الأغواط</option>
+<option>04 - أم البواقي</option>
 <option>05 - باتنة</option>
 <option>06 - بجاية</option>
 <option>07 - بسكرة</option>
+<option>08 - بشار</option>
 <option>09 - البليدة</option>
 <option>10 - البويرة</option>
+<option>11 - تمنراست</option>
+<option>12 - تبسة</option>
 <option>13 - تلمسان</option>
+<option>14 - تيارت</option>
+<option>15 - تيزي وزو</option>
+<option>16 - الجزائر</option>
+<option>17 - الجلفة</option>
+<option>18 - جيجل</option>
 <option>19 - سطيف</option>
+<option>20 - سعيدة</option>
 <option>21 - سكيكدة</option>
+<option>22 - سيدي بلعباس</option>
 <option>23 - عنابة</option>
+<option>24 - قالمة</option>
 <option>25 - قسنطينة</option>
+<option>26 - المدية</option>
 <option>27 - مستغانم</option>
+<option>28 - المسيلة</option>
 <option>29 - معسكر</option>
 <option>30 - ورقلة</option>
+<option>31 - وهران</option>
+<option>32 - البيض</option>
+<option>33 - إليزي</option>
+<option>34 - برج بوعريريج</option>
+<option>35 - بومرداس</option>
+<option>36 - الطارف</option>
+<option>37 - تندوف</option>
+<option>38 - تيسمسيلت</option>
+<option>39 - الوادي</option>
+<option>40 - خنشلة</option>
+<option>41 - سوق أهراس</option>
+<option>42 - تيبازة</option>
+<option>43 - ميلة</option>
+<option>44 - عين الدفلى</option>
+<option>45 - النعامة</option>
+<option>46 - عين تموشنت</option>
+<option>47 - غرداية</option>
+<option>48 - غليزان</option>
+<option>49 - تيميمون</option>
+<option>50 - برج باجي مختار</option>
+<option>51 - أولاد جلال</option>
+<option>52 - بني عباس</option>
+<option>53 - عين صالح</option>
+<option>54 - عين قزام</option>
+<option>55 - تقرت</option>
+<option>56 - جانت</option>
+<option>57 - المغير</option>
+<option>58 - المنيعة</option>
+
 </select>
 
 <p>🏠 توصيل منزل: <span id="home">-</span> دج</p>
@@ -144,23 +188,65 @@ const images={
 };
 
 
-const livraison={
-"16 - الجزائر":{home:400,desk:200},
-"31 - وهران":{home:700,desk:400},
+const livraison = {
 "01 - أدرار":{home:1100,desk:600},
+"02 - الشلف":{home:700,desk:400},
+"03 - الأغواط":{home:900,desk:500},
+"04 - أم البواقي":{home:800,desk:400},
 "05 - باتنة":{home:800,desk:400},
 "06 - بجاية":{home:700,desk:400},
 "07 - بسكرة":{home:900,desk:500},
+"08 - بشار":{home:1100,desk:600},
 "09 - البليدة":{home:500,desk:250},
 "10 - البويرة":{home:650,desk:400},
+"11 - تمنراست":{home:1300,desk:800},
+"12 - تبسة":{home:800,desk:500},
 "13 - تلمسان":{home:800,desk:400},
+"14 - تيارت":{home:800,desk:400},
+"15 - تيزي وزو":{home:650,desk:400},
+"16 - الجزائر":{home:400,desk:200},
+"17 - الجلفة":{home:900,desk:500},
+"18 - جيجل":{home:700,desk:400},
 "19 - سطيف":{home:700,desk:400},
+"20 - سعيدة":{home:800,desk:400},
 "21 - سكيكدة":{home:700,desk:400},
+"22 - سيدي بلعباس":{home:700,desk:400},
 "23 - عنابة":{home:700,desk:400},
+"24 - قالمة":{home:800,desk:400},
 "25 - قسنطينة":{home:700,desk:400},
+"26 - المدية":{home:600,desk:400},
 "27 - مستغانم":{home:700,desk:400},
+"28 - المسيلة":{home:800,desk:500},
 "29 - معسكر":{home:700,desk:400},
-"30 - ورقلة":{home:1000,desk:500}
+"30 - ورقلة":{home:1000,desk:500},
+"31 - وهران":{home:700,desk:400},
+"32 - البيض":{home:900,desk:500},
+"33 - إليزي":{home:1300,desk:800},
+"34 - برج بوعريريج":{home:700,desk:400},
+"35 - بومرداس":{home:600,desk:300},
+"36 - الطارف":{home:700,desk:400},
+"37 - تندوف":{home:1300,desk:800},
+"38 - تيسمسيلت":{home:800,desk:400},
+"39 - الوادي":{home:900,desk:500},
+"40 - خنشلة":{home:800,desk:400},
+"41 - سوق أهراس":{home:800,desk:400},
+"42 - تيبازة":{home:600,desk:300},
+"43 - ميلة":{home:700,desk:400},
+"44 - عين الدفلى":{home:700,desk:400},
+"45 - النعامة":{home:900,desk:500},
+"46 - عين تموشنت":{home:700,desk:400},
+"47 - غرداية":{home:900,desk:500},
+"48 - غليزان":{home:700,desk:400},
+"49 - تيميمون":{home:1100,desk:600},
+"50 - برج باجي مختار":{home:1300,desk:800},
+"51 - أولاد جلال":{home:900,desk:500},
+"52 - بني عباس":{home:1100,desk:600},
+"53 - عين صالح":{home:1200,desk:700},
+"54 - عين قزام":{home:1300,desk:800},
+"55 - تقرت":{home:900,desk:500},
+"56 - جانت":{home:1300,desk:800},
+"57 - المغير":{home:900,desk:500},
+"58 - المنيعة":{home:1000,desk:600}
 };
 
 
