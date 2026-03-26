@@ -60,7 +60,7 @@ button{
 <h2>مستخرج الهواء التوربيني</h2>
 
 <img id="img-top" src="images/100mm.jpg">
-<img id="img-bottom" src="images/100mm-2.jpg">
+<img id="img-bottom" src="images/100mm2.jpg">
 
 <div class="video-box">
   <video controls autoplay muted loop>
@@ -88,6 +88,7 @@ button{
 </select>
 
 <p>السعر: <span id="price">-</span> دج</p>
+  <p>المساحة: <span id="area">-</span></p>
 
 <label>الولاية</label>
 <select id="wilaya">
@@ -323,6 +324,20 @@ document.getElementById("img-top").src=images[s].top;
 document.getElementById("img-bottom").src=images[s].bottom;
 }
 updateTotal();
+  const area = {
+  "100mm": "8-16m²",
+  "125mm": "10-20m²",
+  "150mm": "18-36m²",
+  "200mm": "25-50m²",   // تقدّر تبدّل هاد القيمة حسب ما تحب
+  "250mm": "55-130m²",
+  "315mm": "90-200m²"
+};
+
+if(area[size]){
+    document.getElementById("area").innerText = area[size];
+} else {
+    document.getElementById("area").innerText = "-";
+}
 };
 
 document.getElementById("type").onchange=updateTotal;
