@@ -317,19 +317,19 @@ let ship= type=="home" ? parseInt(document.getElementById("home").innerText)||0 
 document.getElementById("total").innerText=price+ship;
 }
 
-document.getElementById("size").onchange=function(){
+document.getElementById("size").onchange = function() {
     let opt = this.options[this.selectedIndex];
     document.getElementById("price").innerText = opt.dataset.price || "-";
 
-    let s = this.value; 
+    let s = this.value; // size li ikhtar l-user
 
+    // update images
     if(images[s]){
         document.getElementById("img-top").src = images[s].top;
         document.getElementById("img-bottom").src = images[s].bottom;
     }
 
-    updateTotal();
-
+    // update المساحة
     const area = {
       "100mm": "8-16",
       "125mm": "10-20",
@@ -339,35 +339,14 @@ document.getElementById("size").onchange=function(){
       "315mm": "90-200"
     };
 
-let opt = this.options[this.selectedIndex];
-document.getElementById("price").innerText = opt.dataset.price || "-";
+    // **Hna l-important:** concatenate " متر مربع"
+    document.getElementById("area").innerText = area[s] ? area[s] + " متر مربع" : "-";
 
-let s = this.value; // hna size li ikhtar l-user
-
-// update images
-if(images[s]){
-    document.getElementById("img-top").src = images[s].top;
-    document.getElementById("img-bottom").src = images[s].bottom;
-}
-
-// update المساحة
-const area = {
-  "100mm": "8-16",
-  "125mm": "10-20",
-  "150mm": "18-36",
-  "200mm": "25-50",
-  "250mm": "55-130",
-  "315mm": "90-200"
+    // update total (ila kayn function)
+    updateTotal();
 };
 
-if(area[s]) {
-    document.getElementById("area").innerText = area[s] + " متر مربع";
-} else {
-    document.getElementById("area").innerText = "-";
-}
 
-// update total if needed
-updateTotal();
 
 document.getElementById("type").onchange = updateTotal;
 
