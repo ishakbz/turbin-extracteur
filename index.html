@@ -343,12 +343,11 @@ document.getElementById("size").onchange=function(){
     };
 
    
-    if(area[s]){
-        document.getElementById("area").innerText = area[s];
-    } else {
-        document.getElementById("area").innerText = "-";
-    }
-};
+if(area[s]){
+    document.getElementById("area").innerHTML = `<span style="direction:ltr; unicode-bidi: embed;">${area[s]}</span>`;
+} else {
+    document.getElementById("area").innerHTML = `<span style="direction:ltr; unicode-bidi: embed;">-</span>`;
+}
 
 document.getElementById("type").onchange = updateTotal;
 
