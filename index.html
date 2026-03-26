@@ -316,31 +316,36 @@ document.getElementById("total").innerText=price+ship;
 }
 
 document.getElementById("size").onchange=function(){
-let opt=this.options[this.selectedIndex];
-document.getElementById("price").innerText=opt.dataset.price||"-";
-let s=this.value;
-if(images[s]){
-document.getElementById("img-top").src=images[s].top;
-document.getElementById("img-bottom").src=images[s].bottom;
-}
-updateTotal();
-  const area = {
-  "100mm": "8-16m²",
-  "125mm": "10-20m²",
-  "150mm": "18-36m²",
-  "200mm": "25-50m²",   // تقدّر تبدّل هاد القيمة حسب ما تحب
-  "250mm": "55-130m²",
-  "315mm": "90-200m²"
+    let opt = this.options[this.selectedIndex];
+    document.getElementById("price").innerText = opt.dataset.price || "-";
+
+    let s = this.value; 
+
+    if(images[s]){
+        document.getElementById("img-top").src = images[s].top;
+        document.getElementById("img-bottom").src = images[s].bottom;
+    }
+
+    updateTotal();
+
+    const area = {
+      "100mm": "8-16m²",
+      "125mm": "10-20m²",
+      "150mm": "18-36m²",
+      "200mm": "25-50m²",
+      "250mm": "55-130m²",
+      "315mm": "90-200m²"
+    };
+
+   
+    if(area[s]){
+        document.getElementById("area").innerText = area[s];
+    } else {
+        document.getElementById("area").innerText = "-";
+    }
 };
 
-if(area[size]){
-    document.getElementById("area").innerText = area[size];
-} else {
-    document.getElementById("area").innerText = "-";
-}
-};
-
-document.getElementById("type").onchange=updateTotal;
+document.getElementById("type").onchange = updateTotal;
 
 document.getElementById("wilaya").onchange=function(){
 let w=this.value;
