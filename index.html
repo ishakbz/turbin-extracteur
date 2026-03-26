@@ -7,44 +7,47 @@
 <style>
 body{font-family:Arial;background:#f4f4f4;direction:rtl;margin:0}
 header{background:#007bff;color:#fff;padding:15px;text-align:center;font-size:22px}
+
 .container{max-width:900px;margin:20px auto;background:#fff;padding:20px;border-radius:10px}
 
 img{
   width:100%;
   max-width:700px;
-  height:auto;
   display:block;
   margin:20px auto;
   border-radius:10px;
 }
 
-video{
-  width:300%;
-  max-width:520px; 
-  height:520px;      
-  object-fit:cover;  
-  display:block;
-  margin:20px auto;
-  border-radius:10px;
-}
 .video-box{
-  width:100%;
   display:flex;
   justify-content:center;
-  margin:30px 0;
+  margin:20px 0;
 }
 
 .video-box video{
-  width:90% !important;     /* يكبر كامل */
-  max-width:800px;          /* الحد الأقصى */
-  height:400px;             /* الطول */
+  width:90%;
+  max-width:700px;
+  height:400px;
   object-fit:cover;
-  border-radius:12px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.3);
+  border-radius:10px;
 }
 
-select,input{width:100%;padding:8px;margin-top:8px}
-button{background:#28a745;color:#fff;padding:10px;border:none;margin-top:10px;width:100%}
+select,input{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+}
+
+button{
+  background:#28a745;
+  color:white;
+  padding:12px;
+  border:none;
+  margin-top:15px;
+  width:100%;
+  font-size:16px;
+}
+
 </style>
 </head>
 
@@ -56,27 +59,23 @@ button{background:#28a745;color:#fff;padding:10px;border:none;margin-top:10px;wi
 
 <h2>مستخرج الهواء التوربيني</h2>
 
-<!-- صور -->
 <img id="img-top" src="images/100mm.jpg">
-<img id="img-bottom" src="images/100mm2.jpg">
+<img id="img-bottom" src="images/100mm-2.jpg">
 
-<!-- فيديو -->
 <div class="video-box">
   <video controls autoplay muted loop>
-    <source src="vedio/demo.mp4" type="video/mp4">
+    <source src="video/demo.mp4" type="video/mp4">
   </video>
 </div>
 
-<!-- وصف -->
 <p>
-💨 المنتج متوفر<br>
+💨 متوفر بعدة مقاسات<br>
 ✔️ شفط قوي<br>
 ✔️ صوت منخفض<br>
 ✔️ ضد الرطوبة<br>
-🚚 توصيل 58 ولاية
+🚚 توصيل لجميع الولايات
 </p>
 
-<!-- المقاس -->
 <label>المقاس</label>
 <select id="size">
 <option value="">اختر</option>
@@ -90,11 +89,9 @@ button{background:#28a745;color:#fff;padding:10px;border:none;margin-top:10px;wi
 
 <p>السعر: <span id="price">-</span> دج</p>
 
-
 <label>الولاية</label>
 <select id="wilaya">
-<option value="">اختر الولاية</option>
-
+<option value="">اختر</option>
 <option>01 - أدرار</option>
 <option>02 - الشلف</option>
 <option>03 - الأغواط</option>
@@ -153,12 +150,10 @@ button{background:#28a745;color:#fff;padding:10px;border:none;margin-top:10px;wi
 <option>56 - جانت</option>
 <option>57 - المغير</option>
 <option>58 - المنيعة</option>
-
 </select>
 
 <p>🏠 توصيل منزل: <span id="home">-</span> دج</p>
 <p>🏢 توصيل مكتب: <span id="desk">-</span> دج</p>
-
 
 <label>نوع التوصيل</label>
 <select id="type">
@@ -166,17 +161,20 @@ button{background:#28a745;color:#fff;padding:10px;border:none;margin-top:10px;wi
 <option value="desk">مكتب</option>
 </select>
 
+<p>المجموع: <span id="total">-</span> دج</p>
 
 <input id="name" placeholder="الاسم الكامل">
-<input id="baladia" placeholder="البلدية">
+
+<input list="baladia-list" id="baladia" placeholder="اكتب البلدية">
+<datalist id="baladia-list"></datalist>
+
 <input id="phone" placeholder="رقم الهاتف">
 
-<button onclick="send()">إرسال الطلب عبر واتساب</button>
+<button onclick="send()">إرسال عبر واتساب</button>
 
 </div>
 
 <script>
-
 
 const images={
 "100mm":{top:"images/100mm.jpg",bottom:"images/100mm-2.jpg"},
@@ -187,8 +185,7 @@ const images={
 "315mm":{top:"images/315mm.jpg",bottom:"images/315mm-2.jpg"}
 };
 
-
-const livraison = {
+const livraison={
 "01 - أدرار":{home:1100,desk:600},
 "02 - الشلف":{home:700,desk:400},
 "03 - الأغواط":{home:900,desk:500},
@@ -249,27 +246,107 @@ const livraison = {
 "58 - المنيعة":{home:1000,desk:600}
 };
 
+const baladiat = {
+  "01 - أدرار": ["أدرار","رقان","تيميمون","أولف","زناتة","بني عباس","تيميمون الشمالية"],
+  "02 - الشلف": ["الشلف","تنس","بوقادير","أولاد فارس","حداد","سيدي عبد الله","وادي قوسين"],
+  "03 - الأغواط": ["الأغواط","قصر الحيران","آفلو","أبو الحسن","بريكة","مزغران"],
+  "04 - أم البواقي": ["أم البواقي","عين البيضاء","عين مليلة","برج قاصد علي","بوشقوف","بلدية أولاد علي"],
+  "05 - باتنة": ["باتنة","بريكة","عين التوتة","نقاوس","تازولت","حمام ملوان","تاغزوت"],
+  "06 - بجاية": ["بجاية","أقبو","خراطة","سوق الاثنين","ميقاو","تيزي غنيف","تيبازة بجاية"],
+  "07 - بسكرة": ["بسكرة","طولقة","سيدي عقبة","أورلال","بوسعادة","المغير"],
+  "08 - بشار": ["بشار","العبادلة","بني ونيف","وادي الرمال","تيميمون","تاجنانت"],
+  "09 - البليدة": ["البليدة","بوفاريك","العفرون","مفتاح","الأربعاء","شفة","البيضاض"],
+  "10 - البويرة": ["البويرة","سور الغزلان","الأخضرية","الحمام البحري","بن داود"],
+  "11 - تمنراست": ["تمنراست","عين صالح","عين قزام","إين صالح"],
+  "12 - تبسة": ["تبسة","الشريعة","بئر العاتر","العبودية","عين التوتة"],
+  "13 - تلمسان": ["تلمسان","مغنية","الغزوات","سيدي بن يحيى","أولاد براهيم"],
+  "14 - تيارت": ["تيارت","فرندة","السوقر","عبان رمضان","عين لقراح"],
+  "15 - تيزي وزو": ["تيزي وزو","ذراع بن خدة","عين الحمام","أيت يحي","أزرار"],
+  "16 - الجزائر": ["الجزائر الوسطى","باب الزوار","الحراش","بئر مراد رايس","الدار البيضاء","قصبة الجزائر","مرسى محمد","برج الكيفان"],
+  "17 - الجلفة": ["الجلفة","عين وسارة","حاسي بحبح","سلڨة","وادي الفضة"],
+  "18 - جيجل": ["جيجل","الطاهير","الميلية","جيجل الجديدة","الحجار","صولة"],
+  "19 - سطيف": ["سطيف","العلمة","عين ولمان","بوقاعة","مقرن","عين الكبيرة","سيدي عبد الرحمن"],
+  "20 - سعيدة": ["سعيدة","عين الحجر","الرحمانية","بوعرفة"],
+  "21 - سكيكدة": ["سكيكدة","الحروش","عزابة","بئر العاتر","القرين"],
+  "22 - سيدي بلعباس": ["سيدي بلعباس","تلاغ","سفيزف","عين البرد","بوعينان"],
+  "23 - عنابة": ["عنابة","الحجار","برحال","وادي الحجار","قنام"],
+  "24 - قالمة": ["قالمة","بوشقوف","حمام دباغ","سيدي عيسى","زغللة"],
+  "25 - قسنطينة": ["قسنطينة","الخروب","عين عبيد","محمد بوضياف","حامة بوزيان"],
+  "26 - المدية": ["المدية","البرواقية","قصر البخاري","عين الأمير","بوسعادة"],
+  "27 - مستغانم": ["مستغانم","عين تادلس","سيدي علي","حوامة","بوحجر"],
+  "28 - المسيلة": ["المسيلة","بوسعادة","عين الملح","حمام الزياتين","بن صالح"],
+  "29 - معسكر": ["معسكر","غريس","تيغنيف","أولاد سيدي أحمد","أولاد حمدان"],
+  "30 - ورقلة": ["ورقلة","حاسي مسعود","تقرت","عين الزرقاء","الحجار"],
+  "31 - وهران": ["وهران","السانيا","بئر الجير","أرزيو","عين الترك","بوحجر"],
+  "32 - البيض": ["البيض","بوقطب","أولاد يعيش","الرحمانية"],
+  "33 - إليزي": ["إليزي","جانت","عين أمناس","تاغيت"],
+  "34 - برج بوعريريج": ["برج","رأس الوادي","عين تاغروت","المسيلة","تاجنانت"],
+  "35 - بومرداس": ["بومرداس","دلس","برج منايل","مليانة","بني صاف"],
+  "36 - الطارف": ["الطارف","القالة","زيوة"],
+  "37 - تندوف": ["تندوف","بئر لحلو","أولاد بدة"],
+  "38 - تيسمسيلت": ["تيسمسيلت","ثنية الحد","عين فكرون"],
+  "39 - الوادي": ["الوادي","قمار","الرباح","عين البيضاء","بئر العاتر"],
+  "40 - خنشلة": ["خنشلة","قايس","الشرفة","أولاد رشاش"],
+  "41 - سوق أهراس": ["سوق أهراس","تاورة","الفجوجة","عين كرمس"],
+  "42 - تيبازة": ["تيبازة","القليعة","شرشال","مرسى كبير"],
+  "43 - ميلة": ["ميلة","شلغوم العيد","مطار ميلة","عين أمين"],
+  "44 - عين الدفلى": ["عين الدفلى","خميس مليانة","بوسعادة","زهانة"],
+  "45 - النعامة": ["النعامة","عين الصفراء","تمنراست"],
+  "46 - عين تموشنت": ["عين تموشنت","حمام بوحجر","مراس"],
+  "47 - غرداية": ["غرداية","متليلي","أم العظام","المنيعة"],
+  "48 - غليزان": ["غليزان","وادي رهيو","بني بوسعيد","مسكر"],
+  "49 - تيميمون": ["تيميمون","أولاد علي"],
+  "50 - برج باجي مختار": ["برج باجي مختار","بئر الشهداء"],
+  "51 - أولاد جلال": ["أولاد جلال","تيفريت"],
+  "52 - بني عباس": ["بني عباس","تيزي واو"],
+  "53 - عين صالح": ["عين صالح","عين الزرقاء"],
+  "54 - عين قزام": ["عين قزام"],
+  "55 - تقرت": ["تقرت","عين الزرقاء"],
+  "56 - جانت": ["جانت","تاغيت"],
+  "57 - المغير": ["المغير","تيميمون الشمالية"],
+  "58 - المنيعة": ["المنيعة","متليلي"]
+};
+
+function updateTotal(){
+let price=parseInt(document.getElementById("price").innerText)||0;
+let type=document.getElementById("type").value;
+let ship= type=="home" ? parseInt(document.getElementById("home").innerText)||0 : parseInt(document.getElementById("desk").innerText)||0;
+document.getElementById("total").innerText=price+ship;
+}
 
 document.getElementById("size").onchange=function(){
 let opt=this.options[this.selectedIndex];
 document.getElementById("price").innerText=opt.dataset.price||"-";
-
-let size=this.value;
-if(images[size]){
-document.getElementById("img-top").src=images[size].top;
-document.getElementById("img-bottom").src=images[size].bottom;
+let s=this.value;
+if(images[s]){
+document.getElementById("img-top").src=images[s].top;
+document.getElementById("img-bottom").src=images[s].bottom;
 }
-}
+updateTotal();
+};
 
+document.getElementById("type").onchange=updateTotal;
 
 document.getElementById("wilaya").onchange=function(){
 let w=this.value;
+
 if(livraison[w]){
 document.getElementById("home").innerText=livraison[w].home;
 document.getElementById("desk").innerText=livraison[w].desk;
 }
+
+let list=document.getElementById("baladia-list");
+list.innerHTML="";
+if(baladiat[w]){
+baladiat[w].forEach(b=>{
+let op=document.createElement("option");
+op.value=b;
+list.appendChild(op);
+});
 }
 
+updateTotal();
+};
 // إرسال واتساب
 function send(){
     let size = document.getElementById("size").value;
