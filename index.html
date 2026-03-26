@@ -342,11 +342,10 @@ document.getElementById("size").onchange=function(){
       "315mm": "90-200m²"
     };
 
-   
 if(area[s]){
-    document.getElementById("area").innerHTML = `<span style="direction:ltr; unicode-bidi: embed;">${area[s]}</span>`;
+    document.getElementById("area").innerText = area[s].replace("m²","متر مربع");
 } else {
-    document.getElementById("area").innerHTML = `<span style="direction:ltr; unicode-bidi: embed;">-</span>`;
+    document.getElementById("area").innerText = "-";
 }
 
 document.getElementById("type").onchange = updateTotal;
