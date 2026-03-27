@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Click && Buy | Turbin Extracteur</title>
-<!-- مكتبة html2canvas لتحويل العنصر إلى صورة -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 * {
     margin: 0;
@@ -35,6 +33,9 @@ body {
     align-items: center;
     flex-wrap: wrap;
     gap: 15px;
+    position: sticky;
+    top: 10px;
+    z-index: 1000;
 }
 
 .logo {
@@ -243,10 +244,17 @@ body {
     font-weight: bold;
 }
 
-/* زر الإرسال */
-.btn-send {
-    width: 100%;
-    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+/* أزرار الإرسال */
+.send-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn-whatsapp {
+    flex: 1;
+    background: #25D366;
     color: white;
     border: none;
     padding: 14px;
@@ -261,14 +269,231 @@ body {
     gap: 10px;
 }
 
-.btn-send:hover {
+.btn-whatsapp:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(37,211,102,0.3);
 }
 
-.btn-send:disabled {
+.btn-email {
+    flex: 1;
+    background: #EA4335;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-email:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(234,67,53,0.3);
+}
+
+.btn-whatsapp:disabled,
+.btn-email:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+}
+
+/* قسم المواصفات التقنية */
+.specs-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 30px;
+    margin: 20px;
+    border-radius: 20px;
+}
+
+.specs-section h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.spec-item {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.spec-item .spec-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.spec-item .spec-label {
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+.spec-item .spec-value {
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* قسم الدفع والضمان */
+.payment-section {
+    background: linear-gradient(135deg, #28a74515 0%, #20c99715 100%);
+    padding: 30px;
+    margin: 20px;
+    border-radius: 20px;
+    text-align: center;
+    border: 2px solid #28a745;
+}
+
+.payment-section h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #28a745;
+}
+
+.payment-features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.payment-feature {
+    text-align: center;
+    padding: 15px;
+}
+
+.payment-feature .icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.payment-feature .title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.payment-feature .desc {
+    color: #666;
+    font-size: 14px;
+}
+
+/* قسم الأسئلة الشائعة */
+.faq-section {
+    background: white;
+    padding: 30px;
+    margin: 20px;
+    border-radius: 20px;
+}
+
+.faq-section h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.faq-item {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.faq-question {
+    font-weight: bold;
+    font-size: 18px;
+    color: #667eea;
+    cursor: pointer;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.faq-question:hover {
+    background: #e9ecef;
+}
+
+.faq-answer {
+    padding: 15px;
+    color: #666;
+    display: none;
+    line-height: 1.6;
+}
+
+.faq-answer.show {
+    display: block;
+}
+
+/* قسم آراء المعجبين */
+.testimonials-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px 30px;
+    margin: 20px;
+    border-radius: 20px;
+    color: white;
+}
+
+.testimonials-section h3 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.testimonial-card {
+    background: rgba(255,255,255,0.95);
+    color: #333;
+    padding: 20px;
+    border-radius: 15px;
+    transition: transform 0.3s;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+
+.testimonial-text {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.testimonial-author {
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+.testimonial-location {
+    font-size: 12px;
+    color: #999;
+}
+
+.testimonial-stars {
+    color: #ffc107;
+    margin-bottom: 10px;
+    font-size: 18px;
 }
 
 /* قسم الإستفسار */
@@ -297,51 +522,6 @@ body {
 
 .contact-info a:hover {
     text-decoration: underline;
-}
-
-/* قالب الطلب اللي راح يتحول لصورة */
-.order-card {
-    background: white;
-    border-radius: 20px;
-    padding: 25px;
-    max-width: 500px;
-    margin: 20px auto;
-    direction: rtl;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border: 1px solid #e0e0e0;
-}
-
-.order-card h3 {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 15px;
-    border-radius: 15px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.order-card .row {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px dashed #eee;
-}
-
-.order-card .label {
-    font-weight: bold;
-    color: #666;
-}
-
-.order-card .value {
-    color: #333;
-    font-weight: 600;
-}
-
-.order-card .total-row {
-    background: #f0f0f0;
-    padding: 12px;
-    border-radius: 10px;
-    margin-top: 10px;
 }
 
 .toast-notification {
@@ -413,15 +593,10 @@ body {
     .product-header h1 {
         font-size: 24px;
     }
-}
-
-/* إخفاء قالب الصورة عن الشاشة */
-.hidden-card {
-    position: fixed;
-    top: -9999px;
-    left: -9999px;
-    opacity: 0;
-    pointer-events: none;
+    .send-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
 </style>
 </head>
@@ -455,6 +630,43 @@ body {
         <div class="feature-card"><div class="feature-icon">🔇</div><h3>صوت منخفض</h3><p>تشغيل هادئ</p></div>
         <div class="feature-card"><div class="feature-icon">💧</div><h3>مقاوم للرطوبة</h3><p>يعمل بكل الظروف</p></div>
         <div class="feature-card"><div class="feature-icon">🚚</div><h3>توصيل سريع</h3><p>لجميع الولايات</p></div>
+    </div>
+    
+    <!-- قسم المواصفات التقنية -->
+    <div class="specs-section">
+        <h3>📋 المواصفات التقنية</h3>
+        <div class="specs-grid">
+            <div class="spec-item">
+                <div class="spec-icon">⚡</div>
+                <div class="spec-label">الطاقة الكهربائية</div>
+                <div class="spec-value">35 - 80 Watt</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-icon">🔇</div>
+                <div class="spec-label">مستوى الضوضاء</div>
+                <div class="spec-value">≤ 45 dB</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-icon">💪</div>
+                <div class="spec-label">المواد</div>
+                <div class="spec-value">ستانلس ستيل + بلاستيك مقاوم</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-icon">💧</div>
+                <div class="spec-label">مقاومة الرطوبة</div>
+                <div class="spec-value">IP44 (مقاوم للماء)</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-icon">🔧</div>
+                <div class="spec-label">الضمان</div>
+                <div class="spec-value">سنة كاملة</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-icon">🌡️</div>
+                <div class="spec-label">درجة حرارة التشغيل</div>
+                <div class="spec-value">-10°C إلى +60°C</div>
+            </div>
+        </div>
     </div>
     
     <div class="order-form" id="order-form">
@@ -519,40 +731,110 @@ body {
             <input id="phone" placeholder="أدخل رقم هاتفك">
         </div>
         
-        <!-- زر الإرسال الوحيد (واتساب مع صورة) -->
-        <button class="btn-send" onclick="sendOrderAsImage()">
-            📸 إرسال الطلب عبر واتساب (صورة)
-        </button>
+        <div class="form-group">
+            <label>📧 البريد الإلكتروني (للإرسال عبر البريد)</label>
+            <input type="email" id="email" placeholder="example@email.com">
+        </div>
         
-        <!-- قسم الإستفسار -->
-        <div class="contact-info">
-            <p>📞 للإستفسار أو المساعدة، اتصل بنا على:</p>
-            <a href="tel:0673699621">0673 69 96 21</a>
+        <!-- أزرار الإرسال -->
+        <div class="send-buttons">
+            <button class="btn-whatsapp" onclick="sendViaWhatsApp()">
+                📱 إرسال عبر واتساب
+            </button>
+            <button class="btn-email" onclick="sendViaEmail()">
+                📧 إرسال عبر البريد الإلكتروني
+            </button>
         </div>
     </div>
-</div>
-
-<!-- قالب الصورة (مخفي) -->
-<div id="orderCardTemplate" class="hidden-card">
-    <div id="orderCard" class="order-card">
-        <h3>🛍️ Click && Buy</h3>
-        <div class="row"><span class="label">📏 المقاس:</span><span class="value" id="card_size">-</span></div>
-        <div class="row"><span class="label">💰 السعر:</span><span class="value" id="card_price">-</span></div>
-        <div class="row"><span class="label">📍 الولاية:</span><span class="value" id="card_wilaya">-</span></div>
-        <div class="row"><span class="label">🏘️ البلدية:</span><span class="value" id="card_baladia">-</span></div>
-        <div class="row"><span class="label">🚚 نوع التوصيل:</span><span class="value" id="card_type">-</span></div>
-        <div class="row"><span class="label">💵 سعر التوصيل:</span><span class="value" id="card_ship">-</span></div>
-        <div class="total-row"><span class="label">💎 المجموع النهائي:</span><span class="value" id="card_total">-</span></div>
-        <div class="row"><span class="label">👤 الاسم:</span><span class="value" id="card_name">-</span></div>
-        <div class="row"><span class="label">📞 الهاتف:</span><span class="value" id="card_phone">-</span></div>
-        <div style="text-align: center; margin-top: 15px; font-size: 12px; color: #999;">
-            ⏰ التاريخ: <span id="card_date"></span>
+    
+    <!-- قسم الدفع والضمان -->
+    <div class="payment-section">
+        <h3>💰 الدفع عند الاستلام</h3>
+        <div class="payment-features">
+            <div class="payment-feature">
+                <div class="icon">💵</div>
+                <div class="title">الدفع عند الاستلام</div>
+                <div class="desc">لا تدفع أي مقدم</div>
+            </div>
+            <div class="payment-feature">
+                <div class="icon">🔍</div>
+                <div class="title">معاينة المنتج</div>
+                <div class="desc">افحص المنتج قبل الدفع</div>
+            </div>
+            <div class="payment-feature">
+                <div class="icon">🔄</div>
+                <div class="title">استبدال مجاني</div>
+                <div class="desc">14 يوم لاستبدال المنتج</div>
+            </div>
+            <div class="payment-feature">
+                <div class="icon">✅</div>
+                <div class="title">ضمان سنة كاملة</div>
+                <div class="desc">ضمان شامل على المنتج</div>
+            </div>
         </div>
+    </div>
+    
+    <!-- قسم آراء المعجبين -->
+    <div class="testimonials-section">
+        <h3>⭐ آراء عملائنا الكرام</h3>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-text">"منتج رائع جداً، شفط قوي وصوت منخفض. أنصح به بشدة. شكراً Click && Buy على الاحترافية"</div>
+                <div class="testimonial-author">أحمد ر.</div>
+                <div class="testimonial-location">الجزائر العاصمة</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-text">"خدمة ممتازة وسرعة في التوصيل. المنتج مطابق للمواصفات. الله يبارك"</div>
+                <div class="testimonial-author">فاطمة ز.</div>
+                <div class="testimonial-location">وهران</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-text">"جودة عالية وسعر منافس. ركبتو في المطبخ والنتيجة رائعة. شكراً لكم"</div>
+                <div class="testimonial-author">محمد ل.</div>
+                <div class="testimonial-location">قسنطينة</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <div class="testimonial-text">"أفضل منتج في السوق. تركيب سهل وخدمة عملاء ممتازة. أنصح الجميع به"</div>
+                <div class="testimonial-author">سارة م.</div>
+                <div class="testimonial-location">بجاية</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- قسم الأسئلة الشائعة -->
+    <div class="faq-section">
+        <h3>❓ الأسئلة الشائعة</h3>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">📍 كم مدة التوصيل؟</div>
+            <div class="faq-answer">التوصيل يستغرق من 2 إلى 5 أيام حسب الولاية. التوصيل مجاني لولاية الجزائر.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">✅ هل المنتج أصلي؟</div>
+            <div class="faq-answer">نعم 100% منتج أصلي بمواصفات أوروبية مع ضمان سنة كاملة.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">🔧 كيفاش نختار المقاس المناسب؟</div>
+            <div class="faq-answer">المقاس يعتمد على مساحة الغرفة: 100mm (8-16م²)، 125mm (10-20م²)، 150mm (18-36م²)، 200mm (25-50م²).</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">🔄 هل يمكن استبدال المنتج؟</div>
+            <div class="faq-answer">نعم، يمكن استبدال المنتج خلال 14 يوم من تاريخ الاستلام في حالة وجود عيب صنعي.</div>
+        </div>
+    </div>
+    
+    <!-- قسم الإستفسار -->
+    <div class="contact-info">
+        <p>📞 للإستفسار أو المساعدة، اتصل بنا على:</p>
+        <a href="tel:0673699621">0673 69 96 21</a>
     </div>
 </div>
 
 <script>
-// بيانات المنتج
+// بيانات المنتج (نفس البيانات القديمة)
 const images = {
     "100mm": { top: "images/100mm.jpg", bottom: "images/100mm2.jpg" },
     "125mm": { top: "images/125mm.jpg", bottom: "images/125mm-2.jpg" },
@@ -590,10 +872,64 @@ const livraison = {
 };
 
 const baladiat = {
-    "16 - الجزائر": ["الجزائر الوسطى","باب الزوار","الحراش","بئر مراد رايس","الدار البيضاء","القصبة"],
-    "31 - وهران": ["وهران","السانيا","بئر الجير","أرزيو","عين الترك"],
-    "25 - قسنطينة": ["قسنطينة","الخروب","عين عبيد","حامة بوزيان"],
-    "19 - سطيف": ["سطيف","العلمة","عين ولمان","بوقاعة"]
+    "01 - أدرار": ["أدرار", "رقان", "تيميمون", "أولف", "زناتة", "بني عباس"],
+    "02 - الشلف": ["الشلف", "تنس", "بوقادير", "أولاد فارس", "حداد", "سيدي عبد الله", "وادي قوسين"],
+    "03 - الأغواط": ["الأغواط", "قصر الحيران", "آفلو", "أبو الحسن", "بريكة", "مزغران"],
+    "04 - أم البواقي": ["أم البواقي", "عين البيضاء", "عين مليلة", "برج قاصد علي", "بوشقوف", "أولاد علي"],
+    "05 - باتنة": ["باتنة", "بريكة", "عين التوتة", "نقاوس", "تازولت", "حمام ملوان", "تاغزوت"],
+    "06 - بجاية": ["بجاية", "أقبو", "خراطة", "سوق الأثنين", "ميقاو", "تيزي غنيف", "تيبازة"],
+    "07 - بسكرة": ["بسكرة", "طولقة", "سيدي عقبة", "أورلال", "بوسعادة", "المغير"],
+    "08 - بشار": ["بشار", "العبادلة", "بني ونيف", "وادي الرمال", "تيميمون", "تاجنانت"],
+    "09 - البليدة": ["البليدة", "بوفاريك", "العفرون", "مفتاح", "الأربعاء", "الشفة", "البيضاض"],
+    "10 - البويرة": ["البويرة", "سور الغزلان", "الأخضرية", "الحمام البحري", "بن داود"],
+    "11 - تمنراست": ["تمنراست", "عين صالح", "عين قزام", "إين صالح"],
+    "12 - تبسة": ["تبسة", "الشريعة", "بئر العاتر", "العبودية", "عين التوتة"],
+    "13 - تلمسان": ["تلمسان", "مغنية", "الغزوات", "سيدي بن يحيى", "أولاد براهيم"],
+    "14 - تيارت": ["تيارت", "فرندة", "السوقر", "عبان رمضان", "عين لقراح"],
+    "15 - تيزي وزو": ["تيزي وزو", "ذراع بن خدة", "عين الحمام", "أيت يحي", "أزرار"],
+    "16 - الجزائر": ["الجزائر الوسطى", "باب الزوار", "الحراش", "بئر مراد رايس", "الدار البيضاء", "القصبة", "برج الكيفان", "مرسى محمد"],
+    "17 - الجلفة": ["الجلفة", "عين وسارة", "حاسي بحبح", "سلڨة", "وادي الفضة"],
+    "18 - جيجل": ["جيجل", "الطاهير", "الميلية", "جيجل الجديدة", "الحجار", "صولة"],
+    "19 - سطيف": ["سطيف", "العلمة", "عين ولمان", "بوقاعة", "مقرن", "عين الكبيرة", "سيدي عبد الرحمن"],
+    "20 - سعيدة": ["سعيدة", "عين الحجر", "الرحمانية", "بوعرفة"],
+    "21 - سكيكدة": ["سكيكدة", "الحروش", "عزابة", "بئر العاتر", "القرين"],
+    "22 - سيدي بلعباس": ["سيدي بلعباس", "تلاغ", "سفيزف", "عين البرد", "بوعينان"],
+    "23 - عنابة": ["عنابة", "الحجار", "برحال", "وادي الحجار", "قنام"],
+    "24 - قالمة": ["قالمة", "بوشقوف", "حمام دباغ", "سيدي عيسى", "زغللة"],
+    "25 - قسنطينة": ["قسنطينة", "الخروب", "عين عبيد", "محمد بوضياف", "حامة بوزيان"],
+    "26 - المدية": ["المدية", "البرواقية", "قصر البخاري", "عين الأمير", "بوسعادة"],
+    "27 - مستغانم": ["مستغانم", "عين تادلس", "سيدي علي", "حوامة", "بوحجر"],
+    "28 - المسيلة": ["المسيلة", "بوسعادة", "عين الملح", "حمام الزياتين", "بن صالح"],
+    "29 - معسكر": ["معسكر", "غريس", "تيغنيف", "أولاد سيدي أحمد", "أولاد حمدان"],
+    "30 - ورقلة": ["ورقلة", "حاسي مسعود", "تقرت", "عين الزرقاء", "الحجار"],
+    "31 - وهران": ["وهران", "السانيا", "بئر الجير", "أرزيو", "عين الترك", "بوحجر"],
+    "32 - البيض": ["البيض", "بوقطب", "أولاد يعيش", "الرحمانية"],
+    "33 - إليزي": ["إليزي", "جانت", "عين أمناس", "تاغيت"],
+    "34 - برج بوعريريج": ["برج بوعريريج", "رأس الوادي", "عين تاغروت", "المسيلة", "تاجنانت"],
+    "35 - بومرداس": ["بومرداس", "دلس", "برج منايل", "مليانة", "بني صاف"],
+    "36 - الطارف": ["الطارف", "القالة", "زيوة"],
+    "37 - تندوف": ["تندوف", "بئر لحلو", "أولاد بدة"],
+    "38 - تيسمسيلت": ["تيسمسيلت", "ثنية الحد", "عين فكرون"],
+    "39 - الوادي": ["الوادي", "قمار", "الرباح", "عين البيضاء", "بئر العاتر"],
+    "40 - خنشلة": ["خنشلة", "قايس", "الشرفة", "أولاد رشاش"],
+    "41 - سوق أهراس": ["سوق أهراس", "تاورة", "الفجوجة", "عين كرمس"],
+    "42 - تيبازة": ["تيبازة", "القليعة", "شرشال", "مرسى كبير"],
+    "43 - ميلة": ["ميلة", "شلغوم العيد", "مطار ميلة", "عين أمين"],
+    "44 - عين الدفلى": ["عين الدفلى", "خميس مليانة", "بوسعادة", "زهانة"],
+    "45 - النعامة": ["النعامة", "عين الصفراء", "تمنراست"],
+    "46 - عين تموشنت": ["عين تموشنت", "حمام بوحجر", "مراس"],
+    "47 - غرداية": ["غرداية", "متليلي", "أم العظام", "المنيعة"],
+    "48 - غليزان": ["غليزان", "وادي رهيو", "بني بوسعيد", "مسكر"],
+    "49 - تيميمون": ["تيميمون", "أولاد علي"],
+    "50 - برج باجي مختار": ["برج باجي مختار", "بئر الشهداء"],
+    "51 - أولاد جلال": ["أولاد جلال", "تيفريت"],
+    "52 - بني عباس": ["بني عباس", "تيزي واو"],
+    "53 - عين صالح": ["عين صالح", "عين الزرقاء"],
+    "54 - عين قزام": ["عين قزام"],
+    "55 - تقرت": ["تقرت", "عين الزرقاء"],
+    "56 - جانت": ["جانت", "تاغيت"],
+    "57 - المغير": ["المغير", "تيميمون الشمالية"],
+    "58 - المنيعة": ["المنيعة", "متليلي"]
 };
 
 function loadWilayas() {
@@ -618,157 +954,4 @@ document.getElementById("size").onchange = function() {
     let s = this.value;
     if(opt.dataset.price) document.getElementById("price").innerText = opt.dataset.price + " دج";
     if(images[s]) {
-        document.getElementById("img-top").src = images[s].top;
-        document.getElementById("img-bottom").src = images[s].bottom;
-    }
-    document.getElementById("area").innerText = area[s] || "-";
-    updateTotal();
-};
-
-document.getElementById("type").onchange = updateTotal;
-
-document.getElementById("wilaya").onchange = function() {
-    let w = this.value;
-    if(livraison[w]) {
-        document.getElementById("home").innerText = livraison[w].home + " دج";
-        document.getElementById("desk").innerText = livraison[w].desk + " دج";
-    }
-    let list = document.getElementById("baladia-list");
-    list.innerHTML = "";
-    if(baladiat[w]) {
-        baladiat[w].forEach(b => {
-            let op = document.createElement("option");
-            op.value = b;
-            list.appendChild(op);
-        });
-    }
-    updateTotal();
-};
-
-function showToast(msg, isError=false) {
-    let toast = document.createElement('div');
-    toast.className = 'toast-notification';
-    toast.style.backgroundColor = isError ? '#dc3545' : '#28a745';
-    toast.innerHTML = msg;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
-}
-
-function scrollToForm() {
-    document.getElementById('order-form').scrollIntoView({ behavior: 'smooth' });
-}
-
-function validateForm() {
-    let size = document.getElementById("size").value;
-    let wilaya = document.getElementById("wilaya").value;
-    let baladia = document.getElementById("baladia").value;
-    let name = document.getElementById("name").value;
-    let phone = document.getElementById("phone").value;
-    
-    if(!size) { showToast("❌ الرجاء اختيار المقاس", true); return false; }
-    if(!wilaya) { showToast("❌ الرجاء اختيار الولاية", true); return false; }
-    if(!baladia) { showToast("❌ الرجاء إدخال البلدية", true); return false; }
-    if(!name) { showToast("❌ الرجاء إدخال الاسم الكامل", true); return false; }
-    if(!phone) { showToast("❌ الرجاء إدخال رقم الهاتف", true); return false; }
-    return true;
-}
-
-// تحديث قالب الصورة بالبيانات
-function updateOrderCard() {
-    document.getElementById("card_size").innerText = document.getElementById("size").options[document.getElementById("size").selectedIndex]?.text || "-";
-    document.getElementById("card_price").innerText = document.getElementById("price").innerText;
-    document.getElementById("card_wilaya").innerText = document.getElementById("wilaya").value || "-";
-    document.getElementById("card_baladia").innerText = document.getElementById("baladia").value || "-";
-    let type = document.getElementById("type").value;
-    document.getElementById("card_type").innerText = type == "home" ? "منزل 🏠" : "مكتب 🏢";
-    document.getElementById("card_ship").innerText = type == "home" ? document.getElementById("home").innerText : document.getElementById("desk").innerText;
-    document.getElementById("card_total").innerText = document.getElementById("total").innerText;
-    document.getElementById("card_name").innerText = document.getElementById("name").value;
-    document.getElementById("card_phone").innerText = document.getElementById("phone").value;
-    document.getElementById("card_date").innerText = new Date().toLocaleString('ar-DZ');
-}
-
-// إرسال الطلب كصورة عبر واتساب
-function sendOrderAsImage() {
-    if(!validateForm()) return;
-    
-    let btn = document.querySelector('.btn-send');
-    let originalText = btn.innerHTML;
-    btn.innerHTML = '<span class="loading"></span> جاري تحويل الطلب إلى صورة...';
-    btn.disabled = true;
-    
-    // تحديث قالب الصورة
-    updateOrderCard();
-    
-    // جلب عنصر القالب
-    let element = document.getElementById("orderCard");
-    
-    // تحويل العنصر إلى صورة
-    html2canvas(element, {
-        scale: 2,
-        backgroundColor: '#ffffff',
-        logging: false
-    }).then(canvas => {
-        // تحويل الصورة إلى رابط
-        let imageUrl = canvas.toDataURL("image/png");
-        
-        // إنشاء رسالة واتساب مع الصورة
-        let vendeurNumber = "213673699621"; // رقم البائع
-        let message = "🛍️ طلب جديد من Click && Buy 🛍️\n\nالرجاء مراجعة الصورة المرفقة للتفاصيل";
-        
-        // فتح واتساب مع الصورة (ملاحظة: واتساب لا يدعم إرسال الصور مباشرة عبر الرابط، لكن نرسل الرسالة مع رابط الصورة)
-        // الحل: نرسل الرسالة مع رابط الصورة أو نحول الصورة إلى رابط base64
-        
-        // الطريقة الأنسب: نرسل الرسالة مع رابط الصورة
-        let whatsappUrl = `https://wa.me/${vendeurNumber}?text=${encodeURIComponent(message + "\n\n" + imageUrl)}`;
-        
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-        
-        window.open(whatsappUrl, "_blank");
-        showToast("✅ تم تحويل الطلب إلى صورة! أرسلها عبر واتساب", false);
-        
-        // عرض نافذة نجاح
-        let modal = document.createElement('div');
-        modal.className = 'success-modal';
-        modal.innerHTML = `
-            <div style="background:white;border-radius:20px;max-width:400px;width:90%;padding:30px;text-align:center;direction:rtl;animation:scaleIn 0.3s ease">
-                <div style="font-size:60px;margin-bottom:15px">✅📸</div>
-                <h2 style="color:#28a745">تم تحويل الطلب إلى صورة!</h2>
-                <p style="color:#666;margin:10px 0">شكراً لك ${document.getElementById("name").value}</p>
-                <div style="background:#f8f9fa;padding:15px;border-radius:10px;margin:15px 0">
-                    <p>📋 رقم الطلب: #${Date.now().toString().slice(-6)}</p>
-                    <p>📅 التاريخ: ${new Date().toLocaleString('ar-DZ')}</p>
-                    <p>📸 تم إرسال الصورة عبر واتساب</p>
-                </div>
-                <p style="color:#28a745;font-weight:bold">✨ سيتم تأكيد طلبك قريباً ✨</p>
-                <button onclick="this.closest('.success-modal').remove()" style="background:#28a745;color:white;border:none;padding:12px 30px;border-radius:10px;font-size:16px;cursor:pointer;font-weight:bold">حسناً 👍</button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
-        
-        // تنظيف النموذج
-        document.getElementById("size").value = "";
-        document.getElementById("wilaya").value = "";
-        document.getElementById("baladia").value = "";
-        document.getElementById("name").value = "";
-        document.getElementById("phone").value = "";
-        document.getElementById("price").innerText = "- دج";
-        document.getElementById("area").innerText = "-";
-        document.getElementById("home").innerText = "- دج";
-        document.getElementById("desk").innerText = "- دج";
-        document.getElementById("total").innerText = "- دج";
-        
-    }).catch(error => {
-        console.error("Error:", error);
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-        showToast("❌ حدث خطأ، حاول مرة أخرى", true);
-    });
-}
-
-loadWilayas();
-</script>
-</body>
-</html>
+        document.getElementById("img-top").src = images[s
