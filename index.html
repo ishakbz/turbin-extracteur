@@ -241,31 +241,7 @@ body {
     font-weight: bold;
 }
 
-.submit-btn {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-top: 20px;
-}
-
-.submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(40,167,69,0.3);
-}
-
-.submit-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-/* أزرار الإرسال المنفصلة */
+/* أزرار الإرسال */
 .send-buttons {
     display: flex;
     gap: 15px;
@@ -278,12 +254,16 @@ body {
     background: #25D366;
     color: white;
     border: none;
-    padding: 12px;
+    padding: 14px;
     border-radius: 10px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .btn-whatsapp:hover {
@@ -296,17 +276,27 @@ body {
     background: #EA4335;
     color: white;
     border: none;
-    padding: 12px;
+    padding: 14px;
     border-radius: 10px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .btn-email:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(234,67,53,0.3);
+}
+
+.btn-whatsapp:disabled,
+.btn-email:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 /* قسم الإستفسار */
@@ -510,16 +500,17 @@ body {
         <div class="form-group">
             <label>📧 البريد الإلكتروني (للإرسال عبر البريد)</label>
             <input type="email" id="email" placeholder="example@email.com">
-            <small style="color:#666;font-size:12px"></small>
+            <small style="color:#666;font-size:12px">✉️ ضروري للإرسال عبر البريد الإلكتروني</small>
         </div>
         
-        <!-- زر الإرسال الرئيسي (اختياري) -->
-        <button class="submit-btn" onclick="sendViaWhatsApp()">📤 إرسال عبر واتساب</button>
-        
-        <!-- أزرار الإرسال المنفصلة -->
+        <!-- أزرار الإرسال -->
         <div class="send-buttons">
-            <button class="btn-whatsapp" onclick="sendViaWhatsApp()">📱 إرسال عبر واتساب</button>
-            <button class="btn-email" onclick="sendViaEmail()">📧 إرسال عبر البريد الإلكتروني</button>
+            <button class="btn-whatsapp" onclick="sendViaWhatsApp()">
+                📱 إرسال عبر واتساب
+            </button>
+            <button class="btn-email" onclick="sendViaEmail()">
+                📧 إرسال عبر البريد الإلكتروني
+            </button>
         </div>
         
         <!-- قسم الإستفسار -->
@@ -691,7 +682,44 @@ function getOrderData() {
 📞 الهاتف: ${phone}`;
 }
 
-// الإرسال عبر واتساب
+// تنظيف النموذج
+function clearForm() {
+    document.getElementById("size").value = "";
+    document.getElementById("wilaya").value = "";
+    document.getElementById("baladia").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("price").innerText = "- دج";
+    document.getElementById("area").innerText = "-";
+    document.getElementById("home").innerText = "- دج";
+    document.getElementById("desk").innerText = "- دج";
+    document.getElementById("total").innerText = "- دج";
+}
+
+// عرض نافذة النجاح
+function showSuccessModal(type) {
+    let modal = document.createElement('div');
+    modal.className = 'success-modal';
+    modal.innerHTML = `
+        <div style="background:white;border-radius:20px;max-width:400px;width:90%;padding:30px;text-align:center;direction:rtl;animation:scaleIn 0.3s ease">
+            <div style="font-size:60px;margin-bottom:15px">✅</div>
+            <h2 style="color:#28a745">تم إرسال طلبك بنجاح!</h2>
+            <p style="color:#666;margin:10px 0">شكراً لك ${document.getElementById("name").value}</p>
+            <div style="background:#f8f9fa;padding:15px;border-radius:10px;margin:15px 0">
+                <p>📋 رقم الطلب: #${Date.now().toString().slice(-6)}</p>
+                <p>📅 التاريخ: ${new Date().toLocaleString('ar-DZ')}</p>
+                ${type === "email" ? '<p>📧 تم الإرسال عبر البريد الإلكتروني</p>' : '<p>📱 سيتم التواصل عبر واتساب</p>'}
+            </div>
+            <p style="color:#28a745;font-weight:bold">✨ سنتواصل معك خلال 24 ساعة ✨</p>
+            <button onclick="this.closest('.success-modal').remove()" style="background:#28a745;color:white;border:none;padding:12px 30px;border-radius:10px;font-size:16px;cursor:pointer;font-weight:bold">حسناً 👍</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
+}
+
+// الإرسال عبر واتساب (يفتح واتساب والرسالة جاهزة)
 function sendViaWhatsApp() {
     if(!validateForm()) return;
     
@@ -707,18 +735,20 @@ function sendViaWhatsApp() {
         btn.innerHTML = originalText;
         btn.disabled = false;
         window.open(`https://wa.me/${vendeurNumber}?text=${encodeURIComponent(msg)}`, "_blank");
-        showToast("✅ تم فتح واتساب، يرجى إرسال الرسالة", false);
+        showToast("✅ تم إرسال طلبك بنجاح!", false);
         showSuccessModal("whatsapp");
+        clearForm();
     }, 500);
 }
 
-// الإرسال عبر البريد الإلكتروني
+// الإرسال عبر البريد الإلكتروني (يفتح البريد والرسالة جاهزة)
 function sendViaEmail() {
     if(!validateForm()) return;
     
     let msg = getOrderData();
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
+    let shopEmail = "votreemail@gmail.com";  // غيرها لبريدك
     
     if(!email) {
         showToast("❌ الرجاء إدخال البريد الإلكتروني", true);
@@ -730,8 +760,7 @@ function sendViaEmail() {
         return;
     }
     
-    let shopEmail = "rechoumabdelfattah1@gmail.com";
-    let subject = `طلب جديد من ${name}`;
+    let subject = `طلب جديد من ${name} - Click && Buy`;
     
     let btn = event.target;
     let originalText = btn.innerHTML;
@@ -742,31 +771,10 @@ function sendViaEmail() {
         btn.innerHTML = originalText;
         btn.disabled = false;
         window.open(`mailto:${shopEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`, "_blank");
-        showToast("📧 تم فتح البريد الإلكتروني، يرجى إرسال الطلب", false);
+        showToast("✅ تم إرسال طلبك بنجاح!", false);
         showSuccessModal("email");
+        clearForm();
     }, 500);
-}
-
-// عرض نافذة النجاح
-function showSuccessModal(type) {
-    let modal = document.createElement('div');
-    modal.className = 'success-modal';
-    modal.innerHTML = `
-        <div style="background:white;border-radius:20px;max-width:400px;width:90%;padding:30px;text-align:center;direction:rtl;animation:scaleIn 0.3s ease">
-            <div style="font-size:60px;margin-bottom:15px">✅</div>
-            <h2 style="color:#28a745">تم استلام طلبك!</h2>
-            <p style="color:#666;margin:10px 0">شكراً لك ${document.getElementById("name").value}</p>
-            <div style="background:#f8f9fa;padding:15px;border-radius:10px;margin:15px 0">
-                <p>📋 رقم الطلب: #${Date.now().toString().slice(-6)}</p>
-                <p>📅 التاريخ: ${new Date().toLocaleString('ar-DZ')}</p>
-                ${type === "email" ? '<p>📧 تم الإرسال عبر البريد الإلكتروني</p>' : '<p>📱 سيتم التواصل عبر واتساب</p>'}
-            </div>
-            <p style="color:#28a745;font-weight:bold">✨ سنتواصل معك خلال 24 ساعة ✨</p>
-            <button onclick="this.closest('.success-modal').remove()" style="background:#28a745;color:white;border:none;padding:12px 30px;border-radius:10px;font-size:16px;cursor:pointer;font-weight:bold">حسناً 👍</button>
-        </div>
-    `;
-    document.body.appendChild(modal);
-    modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
 }
 
 // تحميل الولايات عند بدء الصفحة
