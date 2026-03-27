@@ -398,8 +398,8 @@ function send(){
 الاسم: ${name}
 رقم الهاتف: ${clientPhone}`;
 
-    // رقم البائع الثابت بصيغة دولية
-    let vendeurNumber = "213778565501"; // <-- هنا الرقم ديالك
+  
+    let vendeurNumber = "213778565501";
 
     // فتح WhatsApp conversation مباشرة عند البائع
     window.open(`https://wa.me/${vendeurNumber}?text=${encodeURIComponent(msg)}`, "_blank");
