@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Click && Buy | Turbin Extracteur - مستخرج الهواء التوربيني</title>
+<title>Click && Buy | Turbin Extracteur</title>
 <style>
 * {
     margin: 0;
@@ -19,10 +19,8 @@ body {
     padding: 20px;
 }
 
-/* تحسين الخط العربي */
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
 
-/* شريط التنقل */
 .navbar {
     background: rgba(255,255,255,0.95);
     backdrop-filter: blur(10px);
@@ -46,12 +44,6 @@ body {
     background-clip: text;
 }
 
-.logo span {
-    font-size: 14px;
-    font-weight: normal;
-    color: #666;
-}
-
 .cart-badge {
     background: #28a745;
     color: white;
@@ -67,7 +59,6 @@ body {
     transform: scale(1.05);
 }
 
-/* الحاوية الرئيسية */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -89,7 +80,6 @@ body {
     }
 }
 
-/* محتوى المنتج */
 .product-header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 40px;
@@ -102,12 +92,6 @@ body {
     margin-bottom: 10px;
 }
 
-.product-header p {
-    font-size: 18px;
-    opacity: 0.9;
-}
-
-/* معرض الصور */
 .gallery {
     padding: 30px;
     background: #f8f9fa;
@@ -137,14 +121,8 @@ body {
     height: 300px;
     object-fit: cover;
     display: block;
-    transition: transform 0.3s;
 }
 
-.gallery-item:hover img {
-    transform: scale(1.1);
-}
-
-/* الفيديو */
 .video-container {
     position: relative;
     padding-bottom: 56.25%;
@@ -163,7 +141,6 @@ body {
     object-fit: cover;
 }
 
-/* المميزات */
 .features {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -190,12 +167,6 @@ body {
     margin-bottom: 10px;
 }
 
-.feature-card h3 {
-    font-size: 18px;
-    margin-bottom: 5px;
-}
-
-/* نموذج الطلب */
 .order-form {
     padding: 30px;
     background: white;
@@ -265,17 +236,11 @@ body {
     margin: 20px 0;
 }
 
-.total-price .label {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
 .total-price .value {
     font-size: 36px;
     font-weight: bold;
 }
 
-/* زر الإرسال */
 .submit-btn {
     width: 100%;
     padding: 15px;
@@ -295,11 +260,11 @@ body {
     box-shadow: 0 5px 15px rgba(40,167,69,0.3);
 }
 
-.submit-btn:active {
-    transform: translateY(0);
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
-/* رسائل التنبيه */
 .toast-notification {
     position: fixed;
     bottom: 20px;
@@ -324,26 +289,6 @@ body {
     }
 }
 
-/* تصميم متجاوب */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-    
-    .product-header h1 {
-        font-size: 24px;
-    }
-    
-    .gallery-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .price-info {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* مؤشر التحميل */
 .loading {
     display: inline-block;
     width: 20px;
@@ -357,17 +302,111 @@ body {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+.gift-section {
+    margin: 25px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #fff5e6 0%, #ffe6f0 100%);
+    border-radius: 15px;
+    border: 2px solid #ff9800;
+    position: relative;
+    overflow: hidden;
+}
+
+.gift-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.gift-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid #e0e0e0;
+}
+
+.gift-option:hover {
+    transform: translateY(-3px);
+    border-color: #ff9800;
+}
+
+.gift-option:has(input:checked) {
+    border-color: #ff9800;
+    background: #fff5e6;
+}
+
+.gift-option input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.gift-counter {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(255,152,0,0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+#giftCountdown {
+    background: #ff9800;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.success-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    .product-header h1 {
+        font-size: 24px;
+    }
+    .gift-options {
+        grid-template-columns: 1fr;
+    }
+}
 </style>
 </head>
 <body>
 
 <div class="navbar">
-    <div class="logo">
-        Click && Buy <span>| منتجات أصلية</span>
-    </div>
-    <div class="cart-badge" onclick="scrollToForm()">
-        🛒 اطلب الآن
-    </div>
+    <div class="logo">Click && Buy <span>| منتجات أصلية</span></div>
+    <div class="cart-badge" onclick="scrollToForm()">🛒 اطلب الآن</div>
 </div>
 
 <div class="container">
@@ -378,52 +417,30 @@ body {
     
     <div class="gallery">
         <div class="gallery-grid">
-            <div class="gallery-item">
-                <img id="img-top" src="images/100mm.jpg" alt="Turbin Extracteur">
-            </div>
-            <div class="gallery-item">
-                <img id="img-bottom" src="images/100mm2.jpg" alt="Turbin Extracteur - Side">
-            </div>
+            <div class="gallery-item"><img id="img-top" src="images/100mm.jpg" alt="Turbin Extracteur"></div>
+            <div class="gallery-item"><img id="img-bottom" src="images/100mm2.jpg" alt="Turbin Extracteur"></div>
         </div>
-        
         <div class="video-container">
             <video controls autoplay muted loop>
                 <source src="video/demo.mp4" type="video/mp4">
-                متصفحك لا يدعم الفيديو
             </video>
         </div>
     </div>
     
     <div class="features">
-        <div class="feature-card">
-            <div class="feature-icon">💨</div>
-            <h3>شفط قوي</h3>
-            <p>تقنية متطورة لشفط فعال</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🔇</div>
-            <h3>صوت منخفض</h3>
-            <p>تشغيل هادئ لا يزعج</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">💧</div>
-            <h3>مقاوم للرطوبة</h3>
-            <p>يعمل في جميع الظروف</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🚚</div>
-            <h3>توصيل سريع</h3>
-            <p>لجميع ولايات الوطن</p>
-        </div>
+        <div class="feature-card"><div class="feature-icon">💨</div><h3>شفط قوي</h3></div>
+        <div class="feature-card"><div class="feature-icon">🔇</div><h3>صوت منخفض</h3></div>
+        <div class="feature-card"><div class="feature-icon">💧</div><h3>مقاوم للرطوبة</h3></div>
+        <div class="feature-card"><div class="feature-icon">🚚</div><h3>توصيل سريع</h3></div>
     </div>
     
     <div class="order-form" id="order-form">
-        <h2 style="margin-bottom: 20px;">📝 معلومات الطلب</h2>
+        <h2 style="margin-bottom:20px">📝 معلومات الطلب</h2>
         
         <div class="form-group">
             <label>📏 المقاس</label>
             <select id="size">
-                <option value="">اختر المقاس المناسب</option>
+                <option value="">اختر المقاس</option>
                 <option value="100mm" data-price="7500">100mm - 7500 دج</option>
                 <option value="125mm" data-price="9300">125mm - 9300 دج</option>
                 <option value="150mm" data-price="11000">150mm - 11000 دج</option>
@@ -434,71 +451,73 @@ body {
         </div>
         
         <div class="price-info">
-            <div class="price-card">
-                <div class="label">💰 سعر المنتج</div>
-                <div class="value" id="price">- دج</div>
-            </div>
-            <div class="price-card">
-                <div class="label">📐 المساحة المناسبة</div>
-                <div class="value" id="area">-</div>
-            </div>
+            <div class="price-card"><div class="label">💰 السعر</div><div class="value" id="price">- دج</div></div>
+            <div class="price-card"><div class="label">📐 المساحة</div><div class="value" id="area">-</div></div>
         </div>
         
         <div class="form-group">
             <label>📍 الولاية</label>
-            <select id="wilaya">
-                <option value="">اختر الولاية</option>
-            </select>
+            <select id="wilaya"><option value="">اختر الولاية</option></select>
         </div>
         
         <div class="form-group">
             <label>🏘️ البلدية</label>
-            <input list="baladia-list" id="baladia" placeholder="اكتب أو اختر البلدية">
+            <input list="baladia-list" id="baladia" placeholder="اكتب البلدية">
             <datalist id="baladia-list"></datalist>
         </div>
         
         <div class="price-info">
-            <div class="price-card">
-                <div class="label">🏠 توصيل للمنزل</div>
-                <div class="value" id="home">- دج</div>
-            </div>
-            <div class="price-card">
-                <div class="label">🏢 توصيل للمكتب</div>
-                <div class="value" id="desk">- دج</div>
-            </div>
+            <div class="price-card"><div class="label">🏠 توصيل منزل</div><div class="value" id="home">- دج</div></div>
+            <div class="price-card"><div class="label">🏢 توصيل مكتب</div><div class="value" id="desk">- دج</div></div>
         </div>
         
         <div class="form-group">
             <label>🚚 نوع التوصيل</label>
-            <select id="type">
-                <option value="home">منزل 🏠</option>
-                <option value="desk">مكتب 🏢</option>
+            <select id="type"><option value="home">منزل 🏠</option><option value="desk">مكتب 🏢</option></select>
+        </div>
+        
+        <div class="total-price"><div class="label">المجموع النهائي</div><div class="value" id="total">- دج</div></div>
+        
+        <div class="form-group"><label>👤 الاسم الكامل</label><input id="name" placeholder="أدخل اسمك"></div>
+        <div class="form-group"><label>📞 رقم الهاتف</label><input id="phone" placeholder="أدخل رقم الهاتف"></div>
+        
+        <div class="form-group">
+            <label>📧 البريد الإلكتروني</label>
+            <input type="email" id="email" placeholder="example@email.com">
+            <small style="color:#666;font-size:12px">✉️ ضروري للإرسال عبر البريد الإلكتروني</small>
+        </div>
+        
+        <div class="form-group">
+            <label>📨 طريقة الإرسال</label>
+            <select id="sendMethod">
+                <option value="whatsapp">📱 واتساب (الأسرع)</option>
+                <option value="email">📧 بريد إلكتروني</option>
             </select>
         </div>
         
-        <div class="total-price">
-            <div class="label">المجموع النهائي</div>
-            <div class="value" id="total">- دج</div>
+        <!-- قسم الهدية -->
+        <div class="gift-section">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:15px">
+                <span style="font-size:30px">🎁</span>
+                <h3 style="color:#ff9800;margin:0">هدية مجانية مع كل طلب!</h3>
+            </div>
+            <div class="gift-options">
+                <label class="gift-option"><input type="radio" name="gift" value="لا أريد هدية" checked><span>❌</span><div><strong>لا أريد هدية</strong></div></label>
+                <label class="gift-option"><input type="radio" name="gift" value="مفك بروفيشنال"><span>🔧</span><div><strong>مفك بروفيشنال</strong></div></label>
+                <label class="gift-option"><input type="radio" name="gift" value="شاحن سيارة"><span>🔌</span><div><strong>شاحن سيارة</strong></div></label>
+                <label class="gift-option"><input type="radio" name="gift" value="كابل شحن"><span>🔌</span><div><strong>كابل شحن</strong></div></label>
+                <label class="gift-option"><input type="radio" name="gift" value="سماعات أذن"><span>🎧</span><div><strong>سماعات أذن</strong></div></label>
+                <label class="gift-option"><input type="radio" name="gift" value="مروحة USB"><span>🌀</span><div><strong>مروحة USB</strong></div></label>
+            </div>
+            <div class="gift-counter"><span style="color:#ff9800;font-weight:bold">🎁 عرض محدود:</span> <span id="giftCountdown">50 هدية متبقية</span></div>
         </div>
         
-        <div class="form-group">
-            <label>👤 الاسم الكامل</label>
-            <input id="name" placeholder="أدخل اسمك الكامل">
-        </div>
-        
-        <div class="form-group">
-            <label>📞 رقم الهاتف</label>
-            <input id="phone" placeholder="أدخل رقم هاتفك">
-        </div>
-        
-        <button class="submit-btn" onclick="send()">
-            📤 إرسال الطلب عبر واتساب
-        </button>
+        <button class="submit-btn" onclick="send()">📤 إرسال الطلب</button>
     </div>
 </div>
 
 <script>
-// بيانات الولايات والصور والمساحات (نفس البيانات الأصلية مع بعض التحسينات)
+// بيانات المنتج
 const images = {
     "100mm": { top: "images/100mm.jpg", bottom: "images/100mm2.jpg" },
     "125mm": { top: "images/125mm.jpg", bottom: "images/125mm-2.jpg" },
@@ -509,142 +528,148 @@ const images = {
 };
 
 const area = {
-    "100mm": "8-16 م²",
-    "125mm": "10-20 م²",
-    "150mm": "18-36 م²",
-    "200mm": "25-50 م²",
-    "250mm": "55-130 م²",
-    "315mm": "90-200 م²"
+    "100mm": "8-16 م²", "125mm": "10-20 م²", "150mm": "18-36 م²",
+    "200mm": "25-50 م²", "250mm": "55-130 م²", "315mm": "90-200 م²"
 };
 
 const livraison = {
-    "01 - أدرار": { home: 1100, desk: 600 }, "02 - الشلف": { home: 700, desk: 400 },
-    "03 - الأغواط": { home: 900, desk: 500 }, "04 - أم البواقي": { home: 800, desk: 400 },
-    "05 - باتنة": { home: 800, desk: 400 }, "06 - بجاية": { home: 700, desk: 400 },
-    "07 - بسكرة": { home: 900, desk: 500 }, "08 - بشار": { home: 1100, desk: 600 },
-    "09 - البليدة": { home: 500, desk: 250 }, "10 - البويرة": { home: 650, desk: 400 },
-    "11 - تمنراست": { home: 1300, desk: 800 }, "12 - تبسة": { home: 800, desk: 500 },
-    "13 - تلمسان": { home: 800, desk: 400 }, "14 - تيارت": { home: 800, desk: 400 },
-    "15 - تيزي وزو": { home: 650, desk: 400 }, "16 - الجزائر": { home: 400, desk: 200 },
-    "17 - الجلفة": { home: 900, desk: 500 }, "18 - جيجل": { home: 700, desk: 400 },
-    "19 - سطيف": { home: 700, desk: 400 }, "20 - سعيدة": { home: 800, desk: 400 },
-    "21 - سكيكدة": { home: 700, desk: 400 }, "22 - سيدي بلعباس": { home: 700, desk: 400 },
-    "23 - عنابة": { home: 700, desk: 400 }, "24 - قالمة": { home: 800, desk: 400 },
-    "25 - قسنطينة": { home: 700, desk: 400 }, "26 - المدية": { home: 600, desk: 400 },
-    "27 - مستغانم": { home: 700, desk: 400 }, "28 - المسيلة": { home: 800, desk: 500 },
-    "29 - معسكر": { home: 700, desk: 400 }, "30 - ورقلة": { home: 1000, desk: 500 },
-    "31 - وهران": { home: 700, desk: 400 }, "32 - البيض": { home: 900, desk: 500 },
-    "33 - إليزي": { home: 1300, desk: 800 }, "34 - برج بوعريريج": { home: 700, desk: 400 },
-    "35 - بومرداس": { home: 600, desk: 300 }, "36 - الطارف": { home: 700, desk: 400 },
-    "37 - تندوف": { home: 1300, desk: 800 }, "38 - تيسمسيلت": { home: 800, desk: 400 },
-    "39 - الوادي": { home: 900, desk: 500 }, "40 - خنشلة": { home: 800, desk: 400 },
-    "41 - سوق أهراس": { home: 800, desk: 400 }, "42 - تيبازة": { home: 600, desk: 300 },
-    "43 - ميلة": { home: 700, desk: 400 }, "44 - عين الدفلى": { home: 700, desk: 400 },
-    "45 - النعامة": { home: 900, desk: 500 }, "46 - عين تموشنت": { home: 700, desk: 400 },
-    "47 - غرداية": { home: 900, desk: 500 }, "48 - غليزان": { home: 700, desk: 400 },
-    "49 - تيميمون": { home: 1100, desk: 600 }, "50 - برج باجي مختار": { home: 1300, desk: 800 },
-    "51 - أولاد جلال": { home: 900, desk: 500 }, "52 - بني عباس": { home: 1100, desk: 600 },
-    "53 - عين صالح": { home: 1200, desk: 700 }, "54 - عين قزام": { home: 1300, desk: 800 },
-    "55 - تقرت": { home: 900, desk: 500 }, "56 - جانت": { home: 1300, desk: 800 },
-    "57 - المغير": { home: 900, desk: 500 }, "58 - المنيعة": { home: 1000, desk: 600 }
+    "01 - أدرار":{home:1100,desk:600},"02 - الشلف":{home:700,desk:400},"03 - الأغواط":{home:900,desk:500},
+    "04 - أم البواقي":{home:800,desk:400},"05 - باتنة":{home:800,desk:400},"06 - بجاية":{home:700,desk:400},
+    "07 - بسكرة":{home:900,desk:500},"08 - بشار":{home:1100,desk:600},"09 - البليدة":{home:500,desk:250},
+    "10 - البويرة":{home:650,desk:400},"11 - تمنراست":{home:1300,desk:800},"12 - تبسة":{home:800,desk:500},
+    "13 - تلمسان":{home:800,desk:400},"14 - تيارت":{home:800,desk:400},"15 - تيزي وزو":{home:650,desk:400},
+    "16 - الجزائر":{home:400,desk:200},"17 - الجلفة":{home:900,desk:500},"18 - جيجل":{home:700,desk:400},
+    "19 - سطيف":{home:700,desk:400},"20 - سعيدة":{home:800,desk:400},"21 - سكيكدة":{home:700,desk:400},
+    "22 - سيدي بلعباس":{home:700,desk:400},"23 - عنابة":{home:700,desk:400},"24 - قالمة":{home:800,desk:400},
+    "25 - قسنطينة":{home:700,desk:400},"26 - المدية":{home:600,desk:400},"27 - مستغانم":{home:700,desk:400},
+    "28 - المسيلة":{home:800,desk:500},"29 - معسكر":{home:700,desk:400},"30 - ورقلة":{home:1000,desk:500},
+    "31 - وهران":{home:700,desk:400},"32 - البيض":{home:900,desk:500},"33 - إليزي":{home:1300,desk:800},
+    "34 - برج بوعريريج":{home:700,desk:400},"35 - بومرداس":{home:600,desk:300},"36 - الطارف":{home:700,desk:400},
+    "37 - تندوف":{home:1300,desk:800},"38 - تيسمسيلت":{home:800,desk:400},"39 - الوادي":{home:900,desk:500},
+    "40 - خنشلة":{home:800,desk:400},"41 - سوق أهراس":{home:800,desk:400},"42 - تيبازة":{home:600,desk:300},
+    "43 - ميلة":{home:700,desk:400},"44 - عين الدفلى":{home:700,desk:400},"45 - النعامة":{home:900,desk:500},
+    "46 - عين تموشنت":{home:700,desk:400},"47 - غرداية":{home:900,desk:500},"48 - غليزان":{home:700,desk:400},
+    "49 - تيميمون":{home:1100,desk:600},"50 - برج باجي مختار":{home:1300,desk:800},"51 - أولاد جلال":{home:900,desk:500},
+    "52 - بني عباس":{home:1100,desk:600},"53 - عين صالح":{home:1200,desk:700},"54 - عين قزام":{home:1300,desk:800},
+    "55 - تقرت":{home:900,desk:500},"56 - جانت":{home:1300,desk:800},"57 - المغير":{home:900,desk:500},"58 - المنيعة":{home:1000,desk:600}
 };
 
 const baladiat = {
-    "01 - أدرار": ["أدرار", "رقان", "تيميمون", "أولف", "زناتة", "بني عباس"],
-    "02 - الشلف": ["الشلف", "تنس", "بوقادير", "أولاد فارس", "حداد", "سيدي عبد الله"],
-    "16 - الجزائر": ["الجزائر الوسطى", "باب الزوار", "الحراش", "بئر مراد رايس", "الدار البيضاء", "القصبة", "برج الكيفان"],
-    // أضف باقي الولايات حسب الحاجة
+    "16 - الجزائر": ["الجزائر الوسطى","باب الزوار","الحراش","بئر مراد رايس","الدار البيضاء"],
+    "31 - وهران": ["وهران","السانيا","بئر الجير","أرزيو"]
 };
 
-// تحميل قائمة الولايات
+let giftsRemaining = 50;
+
 function loadWilayas() {
-    const wilayaSelect = document.getElementById('wilaya');
-    for (let key in livraison) {
-        let option = document.createElement('option');
-        option.value = key;
-        option.textContent = key;
-        wilayaSelect.appendChild(option);
+    let select = document.getElementById('wilaya');
+    for(let key in livraison) {
+        let opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = key;
+        select.appendChild(opt);
     }
 }
 
-// تحديث السعر الكلي
 function updateTotal() {
     let price = parseInt(document.getElementById("price").innerText) || 0;
     let type = document.getElementById("type").value;
-    let ship = type == "home" ? parseInt(document.getElementById("home").innerText) || 0 : parseInt(document.getElementById("desk").innerText) || 0;
-    document.getElementById("total").innerText = (price + ship) + " دج";
+    let ship = type=="home" ? parseInt(document.getElementById("home").innerText)||0 : parseInt(document.getElementById("desk").innerText)||0;
+    document.getElementById("total").innerText = (price+ship) + " دج";
 }
 
-// تغيير المقاس
 document.getElementById("size").onchange = function() {
     let opt = this.options[this.selectedIndex];
-    let price = opt.dataset.price;
     let s = this.value;
-    
-    if (price) {
-        document.getElementById("price").innerText = price + " دج";
-    } else {
-        document.getElementById("price").innerText = "- دج";
-    }
-    
-    if (images[s]) {
+    if(opt.dataset.price) document.getElementById("price").innerText = opt.dataset.price + " دج";
+    if(images[s]) {
         document.getElementById("img-top").src = images[s].top;
         document.getElementById("img-bottom").src = images[s].bottom;
     }
-    
-    if (area[s]) {
-        document.getElementById("area").innerText = area[s];
-    } else {
-        document.getElementById("area").innerText = "-";
-    }
-    
+    document.getElementById("area").innerText = area[s] || "-";
     updateTotal();
 };
 
-// تغيير نوع التوصيل
 document.getElementById("type").onchange = updateTotal;
 
-// تغيير الولاية
 document.getElementById("wilaya").onchange = function() {
     let w = this.value;
-    
-    if (livraison[w]) {
+    if(livraison[w]) {
         document.getElementById("home").innerText = livraison[w].home + " دج";
         document.getElementById("desk").innerText = livraison[w].desk + " دج";
     }
-    
     let list = document.getElementById("baladia-list");
     list.innerHTML = "";
-    if (baladiat[w]) {
+    if(baladiat[w]) {
         baladiat[w].forEach(b => {
             let op = document.createElement("option");
             op.value = b;
             list.appendChild(op);
         });
     }
-    
     updateTotal();
 };
 
-// عرض رسالة منبثقة
-function showToast(message, isError = false) {
+function showToast(msg, isError=false) {
     let toast = document.createElement('div');
     toast.className = 'toast-notification';
     toast.style.backgroundColor = isError ? '#dc3545' : '#28a745';
-    toast.innerHTML = message;
+    toast.innerHTML = msg;
     document.body.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
+    setTimeout(() => toast.remove(), 3000);
 }
 
-// التمرير إلى النموذج
 function scrollToForm() {
     document.getElementById('order-form').scrollIntoView({ behavior: 'smooth' });
 }
 
-// إرسال الطلب
+function isValidEmail(email) {
+    return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
+}
+
+function saveOrderToLocal(orderData) {
+    let orders = JSON.parse(localStorage.getItem('clickandbuy_orders') || '[]');
+    orders.push({ id: Date.now(), date: new Date().toISOString(), data: orderData });
+    if(orders.length > 50) orders.shift();
+    localStorage.setItem('clickandbuy_orders', JSON.stringify(orders));
+}
+
+function showSuccessModal(orderMsg, email=null, giftName="لا أريد هدية") {
+    let modal = document.createElement('div');
+    modal.className = 'success-modal';
+    modal.innerHTML = `
+        <div style="background:white;border-radius:20px;max-width:400px;width:90%;padding:30px;text-align:center;direction:rtl;animation:scaleIn 0.3s ease">
+            <div style="font-size:60px;margin-bottom:15px">${giftName !== "لا أريد هدية" ? "🎁✨" : "✅"}</div>
+            <h2 style="color:#28a745">تم استلام طلبك!</h2>
+            <p style="color:#666;margin:10px 0">شكراً لك ${document.getElementById("name").value}</p>
+            <div style="background:#f8f9fa;padding:15px;border-radius:10px;margin:15px 0;text-align:right">
+                <p>📋 رقم الطلب: #${Date.now().toString().slice(-6)}</p>
+                <p>📅 التاريخ: ${new Date().toLocaleString('ar-DZ')}</p>
+                ${giftName !== "لا أريد هدية" ? `<p style="color:#ff9800">🎁 هديتك: ${giftName}</p>` : ''}
+                ${email ? `<p>📧 تم الإرسال إلى: ${email}</p>` : '<p>📱 سيتم التواصل عبر واتساب</p>'}
+            </div>
+            <p style="color:#ff9800;font-weight:bold">✨ سنتواصل معك خلال 24 ساعة ✨</p>
+            <button onclick="this.closest('.success-modal').remove()" style="background:#ff9800;color:white;border:none;padding:12px 30px;border-radius:10px;font-size:16px;cursor:pointer;font-weight:bold">حسناً 👍</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
+}
+
+function clearForm() {
+    document.getElementById("size").value = "";
+    document.getElementById("wilaya").value = "";
+    document.getElementById("baladia").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("price").innerText = "- دج";
+    document.getElementById("area").innerText = "-";
+    document.getElementById("home").innerText = "- دج";
+    document.getElementById("desk").innerText = "- دج";
+    document.getElementById("total").innerText = "- دج";
+}
+
 function send() {
     let size = document.getElementById("size").value;
     let price = document.getElementById("price").innerText;
@@ -652,63 +677,68 @@ function send() {
     let baladia = document.getElementById("baladia").value;
     let type = document.getElementById("type").value;
     let name = document.getElementById("name").value;
-    let clientPhone = document.getElementById("phone").value;
+    let phone = document.getElementById("phone").value;
+    let email = document.getElementById("email").value;
+    let sendMethod = document.getElementById("sendMethod").value;
+    let selectedGift = document.querySelector('input[name="gift"]:checked');
+    let gift = selectedGift ? selectedGift.value : "لا أريد هدية";
     
-    if (!size) {
-        showToast("❌ الرجاء اختيار المقاس", true);
-        return;
-    }
-    if (!wilaya) {
-        showToast("❌ الرجاء اختيار الولاية", true);
-        return;
-    }
-    if (!baladia) {
-        showToast("❌ الرجاء إدخال البلدية", true);
-        return;
-    }
-    if (!name) {
-        showToast("❌ الرجاء إدخال الاسم الكامل", true);
-        return;
-    }
-    if (!clientPhone) {
-        showToast("❌ الرجاء إدخال رقم الهاتف", true);
-        return;
-    }
+    if(!size) { showToast("❌ اختر المقاس", true); return; }
+    if(!wilaya) { showToast("❌ اختر الولاية", true); return; }
+    if(!baladia) { showToast("❌ أدخل البلدية", true); return; }
+    if(!name) { showToast("❌ أدخل الاسم", true); return; }
+    if(!phone) { showToast("❌ أدخل رقم الهاتف", true); return; }
+    if(sendMethod === "email" && !email) { showToast("❌ أدخل البريد الإلكتروني", true); return; }
+    if(email && sendMethod === "email" && !isValidEmail(email)) { showToast("❌ البريد غير صحيح", true); return; }
     
-    let ship = type == "home" ? document.getElementById("home").innerText : document.getElementById("desk").innerText;
+    let ship = type=="home" ? document.getElementById("home").innerText : document.getElementById("desk").innerText;
     let total = document.getElementById("total").innerText;
     
-    let msg = `🛍️ *طلب جديد من Click && Buy* 🛍️
+    let msg = `🛍️ طلب جديد من Click && Buy 🛍️
 ━━━━━━━━━━━━━━━━━━━━
-📏 *المقاس:* ${size}
-💰 *السعر:* ${price}
-📍 *الولاية:* ${wilaya}
-🏘️ *البلدية:* ${baladia}
-🚚 *نوع التوصيل:* ${type == "home" ? "منزل 🏠" : "مكتب 🏢"}
-💵 *سعر التوصيل:* ${ship}
-💎 *المجموع النهائي:* ${total}
+📏 المقاس: ${size}
+💰 السعر: ${price}
+📍 الولاية: ${wilaya}
+🏘️ البلدية: ${baladia}
+🚚 نوع التوصيل: ${type=="home"?"منزل 🏠":"مكتب 🏢"}
+💵 سعر التوصيل: ${ship}
+💎 المجموع: ${total}
 ━━━━━━━━━━━━━━━━━━━━
-👤 *الاسم:* ${name}
-📞 *الهاتف:* ${clientPhone}
+🎁 الهدية: ${gift}
 ━━━━━━━━━━━━━━━━━━━━
-✅ *يرجى التأكيد في أقرب وقت*`;
+👤 الاسم: ${name}
+📞 الهاتف: ${phone}
+📧 البريد: ${email || "غير مدخل"}`;
     
-    let vendeurNumber = "213673699621";
+    let btn = document.querySelector('.submit-btn');
+    let originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="loading"></span> جاري الإرسال...';
+    btn.disabled = true;
     
-    if (confirm("✅ هل أنت متأكد من إرسال الطلب؟")) {
-        window.open(`https://wa.me/${vendeurNumber}?text=${encodeURIComponent(msg)}`, "_blank");
-        showToast("✓ تم إرسال الطلب بنجاح! سيتم التواصل معك قريباً");
+    saveOrderToLocal(msg);
+    
+    setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
         
-        // تنظيف النموذج
-        document.getElementById("size").value = "";
-        document.getElementById("wilaya").value = "";
-        document.getElementById("baladia").value = "";
-        document.getElementById("name").value = "";
-        document.getElementById("phone").value = "";
-    }
+        if(sendMethod === "whatsapp") {
+            showToast("✅ تم استلام طلبك! سيتم التواصل عبر واتساب", false);
+        } else {
+            let shopEmail = "clickandbuy@example.com";
+            let subject = `طلب جديد من ${name}`;
+            window.open(`mailto:${shopEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`, "_blank");
+            showToast("📧 تم فتح البريد الإلكتروني", false);
+        }
+        
+        showSuccessModal(msg, sendMethod === "email" ? email : null, gift);
+        clearForm();
+        
+        giftsRemaining--;
+        document.getElementById("giftCountdown").innerHTML = `${giftsRemaining} هدية متبقية`;
+        if(giftsRemaining <= 10) document.getElementById("giftCountdown").style.background = "#dc3545";
+    }, 1000);
 }
 
-// تحميل الولايات عند بدء الصفحة
 loadWilayas();
 </script>
 </body>
