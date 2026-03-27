@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Click && Buy | Turbin Extracteur</title>
+<!-- مكتبة html2canvas لتحويل العنصر إلى صورة -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 * {
     margin: 0;
@@ -241,17 +243,10 @@ body {
     font-weight: bold;
 }
 
-/* أزرار الإرسال */
-.send-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.btn-whatsapp {
-    flex: 1;
-    background: #25D366;
+/* زر الإرسال */
+.btn-send {
+    width: 100%;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
     color: white;
     border: none;
     padding: 14px;
@@ -266,35 +261,12 @@ body {
     gap: 10px;
 }
 
-.btn-whatsapp:hover {
+.btn-send:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(37,211,102,0.3);
 }
 
-.btn-email {
-    flex: 1;
-    background: #EA4335;
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.btn-email:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(234,67,53,0.3);
-}
-
-.btn-whatsapp:disabled,
-.btn-email:disabled {
+.btn-send:disabled {
     opacity: 0.7;
     cursor: not-allowed;
 }
@@ -325,6 +297,51 @@ body {
 
 .contact-info a:hover {
     text-decoration: underline;
+}
+
+/* قالب الطلب اللي راح يتحول لصورة */
+.order-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    max-width: 500px;
+    margin: 20px auto;
+    direction: rtl;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
+}
+
+.order-card h3 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.order-card .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.order-card .label {
+    font-weight: bold;
+    color: #666;
+}
+
+.order-card .value {
+    color: #333;
+    font-weight: 600;
+}
+
+.order-card .total-row {
+    background: #f0f0f0;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
 .toast-notification {
@@ -396,10 +413,15 @@ body {
     .product-header h1 {
         font-size: 24px;
     }
-    .send-buttons {
-        flex-direction: column;
-        gap: 10px;
-    }
+}
+
+/* إخفاء قالب الصورة عن الشاشة */
+.hidden-card {
+    position: fixed;
+    top: -9999px;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
 }
 </style>
 </head>
@@ -497,26 +519,34 @@ body {
             <input id="phone" placeholder="أدخل رقم هاتفك">
         </div>
         
-        <div class="form-group">
-            <label>📧 البريد الإلكتروني (للإرسال عبر البريد)</label>
-            <input type="email" id="email" placeholder="example@email.com">
-            
-        </div>
-        
-        <!-- أزرار الإرسال -->
-        <div class="send-buttons">
-            <button class="btn-whatsapp" onclick="sendViaWhatsApp()">
-                📱 إرسال عبر واتساب
-            </button>
-            <button class="btn-email" onclick="sendViaEmail()">
-                📧 إرسال عبر البريد الإلكتروني
-            </button>
-        </div>
+        <!-- زر الإرسال الوحيد (واتساب مع صورة) -->
+        <button class="btn-send" onclick="sendOrderAsImage()">
+            📸 إرسال الطلب عبر واتساب (صورة)
+        </button>
         
         <!-- قسم الإستفسار -->
         <div class="contact-info">
             <p>📞 للإستفسار أو المساعدة، اتصل بنا على:</p>
             <a href="tel:0673699621">0673 69 96 21</a>
+        </div>
+    </div>
+</div>
+
+<!-- قالب الصورة (مخفي) -->
+<div id="orderCardTemplate" class="hidden-card">
+    <div id="orderCard" class="order-card">
+        <h3>🛍️ Click && Buy</h3>
+        <div class="row"><span class="label">📏 المقاس:</span><span class="value" id="card_size">-</span></div>
+        <div class="row"><span class="label">💰 السعر:</span><span class="value" id="card_price">-</span></div>
+        <div class="row"><span class="label">📍 الولاية:</span><span class="value" id="card_wilaya">-</span></div>
+        <div class="row"><span class="label">🏘️ البلدية:</span><span class="value" id="card_baladia">-</span></div>
+        <div class="row"><span class="label">🚚 نوع التوصيل:</span><span class="value" id="card_type">-</span></div>
+        <div class="row"><span class="label">💵 سعر التوصيل:</span><span class="value" id="card_ship">-</span></div>
+        <div class="total-row"><span class="label">💎 المجموع النهائي:</span><span class="value" id="card_total">-</span></div>
+        <div class="row"><span class="label">👤 الاسم:</span><span class="value" id="card_name">-</span></div>
+        <div class="row"><span class="label">📞 الهاتف:</span><span class="value" id="card_phone">-</span></div>
+        <div style="text-align: center; margin-top: 15px; font-size: 12px; color: #999;">
+            ⏰ التاريخ: <span id="card_date"></span>
         </div>
     </div>
 </div>
@@ -566,7 +596,6 @@ const baladiat = {
     "19 - سطيف": ["سطيف","العلمة","عين ولمان","بوقاعة"]
 };
 
-// تحميل قائمة الولايات
 function loadWilayas() {
     let select = document.getElementById('wilaya');
     for(let key in livraison) {
@@ -577,7 +606,6 @@ function loadWilayas() {
     }
 }
 
-// تحديث السعر الكلي
 function updateTotal() {
     let price = parseInt(document.getElementById("price").innerText) || 0;
     let type = document.getElementById("type").value;
@@ -585,7 +613,6 @@ function updateTotal() {
     document.getElementById("total").innerText = (price+ship) + " دج";
 }
 
-// تغيير المقاس
 document.getElementById("size").onchange = function() {
     let opt = this.options[this.selectedIndex];
     let s = this.value;
@@ -598,10 +625,8 @@ document.getElementById("size").onchange = function() {
     updateTotal();
 };
 
-// تغيير نوع التوصيل
 document.getElementById("type").onchange = updateTotal;
 
-// تغيير الولاية
 document.getElementById("wilaya").onchange = function() {
     let w = this.value;
     if(livraison[w]) {
@@ -620,7 +645,6 @@ document.getElementById("wilaya").onchange = function() {
     updateTotal();
 };
 
-// عرض الإشعارات
 function showToast(msg, isError=false) {
     let toast = document.createElement('div');
     toast.className = 'toast-notification';
@@ -630,17 +654,10 @@ function showToast(msg, isError=false) {
     setTimeout(() => toast.remove(), 3000);
 }
 
-// التمرير للنموذج
 function scrollToForm() {
     document.getElementById('order-form').scrollIntoView({ behavior: 'smooth' });
 }
 
-// التحقق من البريد الإلكتروني
-function isValidEmail(email) {
-    return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
-}
-
-// التحقق من صحة النموذج
 function validateForm() {
     let size = document.getElementById("size").value;
     let wilaya = document.getElementById("wilaya").value;
@@ -656,128 +673,101 @@ function validateForm() {
     return true;
 }
 
-// جلب بيانات الطلب
-function getOrderData() {
-    let size = document.getElementById("size").value;
-    let price = document.getElementById("price").innerText;
-    let wilaya = document.getElementById("wilaya").value;
-    let baladia = document.getElementById("baladia").value;
+// تحديث قالب الصورة بالبيانات
+function updateOrderCard() {
+    document.getElementById("card_size").innerText = document.getElementById("size").options[document.getElementById("size").selectedIndex]?.text || "-";
+    document.getElementById("card_price").innerText = document.getElementById("price").innerText;
+    document.getElementById("card_wilaya").innerText = document.getElementById("wilaya").value || "-";
+    document.getElementById("card_baladia").innerText = document.getElementById("baladia").value || "-";
     let type = document.getElementById("type").value;
-    let name = document.getElementById("name").value;
-    let phone = document.getElementById("phone").value;
-    let ship = type=="home" ? document.getElementById("home").innerText : document.getElementById("desk").innerText;
-    let total = document.getElementById("total").innerText;
+    document.getElementById("card_type").innerText = type == "home" ? "منزل 🏠" : "مكتب 🏢";
+    document.getElementById("card_ship").innerText = type == "home" ? document.getElementById("home").innerText : document.getElementById("desk").innerText;
+    document.getElementById("card_total").innerText = document.getElementById("total").innerText;
+    document.getElementById("card_name").innerText = document.getElementById("name").value;
+    document.getElementById("card_phone").innerText = document.getElementById("phone").value;
+    document.getElementById("card_date").innerText = new Date().toLocaleString('ar-DZ');
+}
+
+// إرسال الطلب كصورة عبر واتساب
+function sendOrderAsImage() {
+    if(!validateForm()) return;
     
-    return `🛍️ طلب جديد من Click && Buy 🛍️
-━━━━━━━━━━━━━━━━━━━━
-📏 المقاس: ${size}
-💰 السعر: ${price}
-📍 الولاية: ${wilaya}
-🏘️ البلدية: ${baladia}
-🚚 نوع التوصيل: ${type=="home"?"منزل 🏠":"مكتب 🏢"}
-💵 سعر التوصيل: ${ship}
-💎 المجموع النهائي: ${total}
-━━━━━━━━━━━━━━━━━━━━
-👤 الاسم: ${name}
-📞 الهاتف: ${phone}`;
-}
-
-// تنظيف النموذج
-function clearForm() {
-    document.getElementById("size").value = "";
-    document.getElementById("wilaya").value = "";
-    document.getElementById("baladia").value = "";
-    document.getElementById("name").value = "";
-    document.getElementById("phone").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("price").innerText = "- دج";
-    document.getElementById("area").innerText = "-";
-    document.getElementById("home").innerText = "- دج";
-    document.getElementById("desk").innerText = "- دج";
-    document.getElementById("total").innerText = "- دج";
-}
-
-// عرض نافذة النجاح
-function showSuccessModal(type) {
-    let modal = document.createElement('div');
-    modal.className = 'success-modal';
-    modal.innerHTML = `
-        <div style="background:white;border-radius:20px;max-width:400px;width:90%;padding:30px;text-align:center;direction:rtl;animation:scaleIn 0.3s ease">
-            <div style="font-size:60px;margin-bottom:15px">✅</div>
-            <h2 style="color:#28a745">تم إرسال طلبك بنجاح!</h2>
-            <p style="color:#666;margin:10px 0">شكراً لك ${document.getElementById("name").value}</p>
-            <div style="background:#f8f9fa;padding:15px;border-radius:10px;margin:15px 0">
-                <p>📋 رقم الطلب: #${Date.now().toString().slice(-6)}</p>
-                <p>📅 التاريخ: ${new Date().toLocaleString('ar-DZ')}</p>
-                ${type === "email" ? '<p>📧 تم الإرسال عبر البريد الإلكتروني</p>' : '<p>📱 سيتم التواصل عبر واتساب</p>'}
+    let btn = document.querySelector('.btn-send');
+    let originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="loading"></span> جاري تحويل الطلب إلى صورة...';
+    btn.disabled = true;
+    
+    // تحديث قالب الصورة
+    updateOrderCard();
+    
+    // جلب عنصر القالب
+    let element = document.getElementById("orderCard");
+    
+    // تحويل العنصر إلى صورة
+    html2canvas(element, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        logging: false
+    }).then(canvas => {
+        // تحويل الصورة إلى رابط
+        let imageUrl = canvas.toDataURL("image/png");
+        
+        // إنشاء رسالة واتساب مع الصورة
+        let vendeurNumber = "213673699621"; // رقم البائع
+        let message = "🛍️ طلب جديد من Click && Buy 🛍️\n\nالرجاء مراجعة الصورة المرفقة للتفاصيل";
+        
+        // فتح واتساب مع الصورة (ملاحظة: واتساب لا يدعم إرسال الصور مباشرة عبر الرابط، لكن نرسل الرسالة مع رابط الصورة)
+        // الحل: نرسل الرسالة مع رابط الصورة أو نحول الصورة إلى رابط base64
+        
+        // الطريقة الأنسب: نرسل الرسالة مع رابط الصورة
+        let whatsappUrl = `https://wa.me/${vendeurNumber}?text=${encodeURIComponent(message + "\n\n" + imageUrl)}`;
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        
+        window.open(whatsappUrl, "_blank");
+        showToast("✅ تم تحويل الطلب إلى صورة! أرسلها عبر واتساب", false);
+        
+        // عرض نافذة نجاح
+        let modal = document.createElement('div');
+        modal.className = 'success-modal';
+        modal.innerHTML = `
+            <div style="background:white;border-radius:20px;max-width:400px;width:90%;padding:30px;text-align:center;direction:rtl;animation:scaleIn 0.3s ease">
+                <div style="font-size:60px;margin-bottom:15px">✅📸</div>
+                <h2 style="color:#28a745">تم تحويل الطلب إلى صورة!</h2>
+                <p style="color:#666;margin:10px 0">شكراً لك ${document.getElementById("name").value}</p>
+                <div style="background:#f8f9fa;padding:15px;border-radius:10px;margin:15px 0">
+                    <p>📋 رقم الطلب: #${Date.now().toString().slice(-6)}</p>
+                    <p>📅 التاريخ: ${new Date().toLocaleString('ar-DZ')}</p>
+                    <p>📸 تم إرسال الصورة عبر واتساب</p>
+                </div>
+                <p style="color:#28a745;font-weight:bold">✨ سيتم تأكيد طلبك قريباً ✨</p>
+                <button onclick="this.closest('.success-modal').remove()" style="background:#28a745;color:white;border:none;padding:12px 30px;border-radius:10px;font-size:16px;cursor:pointer;font-weight:bold">حسناً 👍</button>
             </div>
-            <p style="color:#28a745;font-weight:bold">✨ سنتواصل معك خلال 24 ساعة ✨</p>
-            <button onclick="this.closest('.success-modal').remove()" style="background:#28a745;color:white;border:none;padding:12px 30px;border-radius:10px;font-size:16px;cursor:pointer;font-weight:bold">حسناً 👍</button>
-        </div>
-    `;
-    document.body.appendChild(modal);
-    modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
-}
-
-// الإرسال عبر واتساب (يفتح واتساب والرسالة جاهزة)
-function sendViaWhatsApp() {
-    if(!validateForm()) return;
-    
-    let msg = getOrderData();
-    let vendeurNumber = "213673699621";
-    
-    let btn = event.target;
-    let originalText = btn.innerHTML;
-    btn.innerHTML = '<span class="loading"></span> جاري الإرسال...';
-    btn.disabled = true;
-    
-    setTimeout(() => {
+        `;
+        document.body.appendChild(modal);
+        modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
+        
+        // تنظيف النموذج
+        document.getElementById("size").value = "";
+        document.getElementById("wilaya").value = "";
+        document.getElementById("baladia").value = "";
+        document.getElementById("name").value = "";
+        document.getElementById("phone").value = "";
+        document.getElementById("price").innerText = "- دج";
+        document.getElementById("area").innerText = "-";
+        document.getElementById("home").innerText = "- دج";
+        document.getElementById("desk").innerText = "- دج";
+        document.getElementById("total").innerText = "- دج";
+        
+    }).catch(error => {
+        console.error("Error:", error);
         btn.innerHTML = originalText;
         btn.disabled = false;
-        window.open(`https://wa.me/${vendeurNumber}?text=${encodeURIComponent(msg)}`, "_blank");
-        showToast("✅ تم إرسال طلبك بنجاح!", false);
-        showSuccessModal("whatsapp");
-        clearForm();
-    }, 500);
+        showToast("❌ حدث خطأ، حاول مرة أخرى", true);
+    });
 }
 
-// الإرسال عبر البريد الإلكتروني (يفتح البريد والرسالة جاهزة)
-function sendViaEmail() {
-    if(!validateForm()) return;
-    
-    let msg = getOrderData();
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let shopEmail = "votreemail@gmail.com";  // غيرها لبريدك
-    
-    if(!email) {
-        showToast("❌ الرجاء إدخال البريد الإلكتروني", true);
-        return;
-    }
-    
-    if(!isValidEmail(email)) {
-        showToast("❌ البريد الإلكتروني غير صحيح", true);
-        return;
-    }
-    
-    let subject = `طلب جديد من ${name} - Click && Buy`;
-    
-    let btn = event.target;
-    let originalText = btn.innerHTML;
-    btn.innerHTML = '<span class="loading"></span> جاري الإرسال...';
-    btn.disabled = true;
-    
-    setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-        window.open(`mailto:${shopEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`, "_blank");
-        showToast("✅ تم إرسال طلبك بنجاح!", false);
-        showSuccessModal("email");
-        clearForm();
-    }, 500);
-}
-
-// تحميل الولايات عند بدء الصفحة
 loadWilayas();
 </script>
 </body>
