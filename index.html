@@ -950,7 +950,7 @@ function showSuccessModal(type) {
     modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
 }
 
-function sendViaWhatsApp() {
+function sendViaWhatsApp() { alert("بعد الضغط سيتم فتح واتساب، اضغط إرسال لإكمال الطلب");
     if(!validateForm()) return;
     let msg = getOrderData();
     let vendeurNumber = "213673699621";
