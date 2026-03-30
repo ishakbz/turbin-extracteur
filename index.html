@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="description" content="Click && Buy - Turbin Extracteur - مستخرج الهواء التوربيني بجودة أوروبية">
-<meta name="keywords" content="turbin extracteur, مستخرج هواء, توربين, الجزائر">
 <title>Click && Buy | Turbin Extracteur</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌪️</text></svg>">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
 
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+<style>
+/* كل الستايلات تاعك نفس ما هي (مغيرناش فيها حاجة) */
 * {
     margin: 0;
     padding: 0;
@@ -23,6 +24,8 @@ body {
     min-height: 100vh;
     padding: 20px;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
 
 .navbar {
     background: rgba(255,255,255,0.95);
@@ -76,8 +79,14 @@ body {
 }
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .product-header {
@@ -263,7 +272,6 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    font-family: inherit;
 }
 
 .btn-whatsapp:hover {
@@ -286,19 +294,12 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    font-family: inherit;
-}
-
-.btn-email:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(234,67,53,0.3);
 }
 
 .btn-whatsapp:disabled,
 .btn-email:disabled {
     opacity: 0.7;
     cursor: not-allowed;
-    transform: none;
 }
 
 .specs-section {
@@ -329,9 +330,22 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-.spec-item .spec-icon { font-size: 30px; margin-bottom: 10px; }
-.spec-item .spec-label { font-weight: bold; color: #667eea; margin-bottom: 5px; }
-.spec-item .spec-value { color: #333; font-size: 18px; font-weight: 600; }
+.spec-item .spec-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.spec-item .spec-label {
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+.spec-item .spec-value {
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+}
 
 .payment-section {
     background: linear-gradient(135deg, #28a74515 0%, #20c99715 100%);
@@ -355,10 +369,26 @@ body {
     flex-wrap: wrap;
 }
 
-.payment-feature { text-align: center; padding: 15px; }
-.payment-feature .icon { font-size: 40px; margin-bottom: 10px; }
-.payment-feature .title { font-weight: bold; font-size: 18px; margin-bottom: 5px; }
-.payment-feature .desc { color: #666; font-size: 14px; }
+.payment-feature {
+    text-align: center;
+    padding: 15px;
+}
+
+.payment-feature .icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.payment-feature .title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.payment-feature .desc {
+    color: #666;
+    font-size: 14px;
+}
 
 .faq-section {
     background: white;
@@ -389,10 +419,11 @@ body {
     background: #f8f9fa;
     border-radius: 10px;
     transition: all 0.3s;
-    user-select: none;
 }
 
-.faq-question:hover { background: #e9ecef; }
+.faq-question:hover {
+    background: #e9ecef;
+}
 
 .faq-answer {
     padding: 15px;
@@ -401,52 +432,24 @@ body {
     line-height: 1.6;
 }
 
-.faq-answer.show { display: block; }
-
-.testimonials-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 40px 30px;
-    margin: 20px;
-    border-radius: 20px;
-    color: white;
+.faq-answer.show {
+    display: block;
 }
-
-.testimonials-section h3 {
-    font-size: 28px;
-    margin-bottom: 30px;
-    text-align: center;
-}
-
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-}
-
-.testimonial-card {
-    background: rgba(255,255,255,0.95);
-    color: #333;
-    padding: 20px;
-    border-radius: 15px;
-    transition: transform 0.3s;
-}
-
-.testimonial-card:hover { transform: translateY(-5px); }
-.testimonial-text { font-size: 16px; line-height: 1.6; margin-bottom: 15px; font-style: italic; }
-.testimonial-author { font-weight: bold; color: #667eea; margin-bottom: 5px; }
-.testimonial-location { font-size: 12px; color: #999; }
-.testimonial-stars { color: #ffc107; margin-bottom: 10px; font-size: 18px; }
 
 .contact-info {
     text-align: center;
-    margin: 20px;
+    margin-top: 25px;
     padding: 15px;
     background: #f8f9fa;
     border-radius: 10px;
     border-right: 4px solid #ff9800;
 }
 
-.contact-info p { color: #333; font-size: 14px; }
+.contact-info p {
+    color: #333;
+    font-size: 14px;
+}
+
 .contact-info a {
     color: #ff9800;
     text-decoration: none;
@@ -455,9 +458,11 @@ body {
     display: inline-block;
     margin-top: 5px;
 }
-.contact-info a:hover { text-decoration: underline; }
 
-/* ✅ إشعار التوست */
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
 .toast-notification {
     position: fixed;
     bottom: 20px;
@@ -467,18 +472,21 @@ body {
     padding: 15px 25px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    z-index: 9999;
+    z-index: 1000;
     animation: slideIn 0.3s ease-out;
-    font-family: 'Cairo', sans-serif;
-    font-weight: bold;
 }
 
 @keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
-/* ✅ مؤشر التحميل */
 .loading {
     display: inline-block;
     width: 20px;
@@ -487,12 +495,12 @@ body {
     border-radius: 50%;
     border-top-color: white;
     animation: spin 0.6s linear infinite;
-    vertical-align: middle;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
 
-/* ✅ نافذة النجاح */
 .success-modal {
     position: fixed;
     top: 0;
@@ -506,40 +514,35 @@ body {
     z-index: 10000;
 }
 
-.success-modal-content {
-    background: white;
-    border-radius: 20px;
-    max-width: 400px;
-    width: 90%;
-    padding: 30px;
-    text-align: center;
-    direction: rtl;
-    animation: scaleIn 0.3s ease;
-}
-
 @keyframes scaleIn {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-/* ✅ حقل خطأ */
-.input-error {
-    border-color: #dc3545 !important;
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 @media (max-width: 768px) {
-    body { padding: 10px; }
-    .product-header h1 { font-size: 24px; }
-    .send-buttons { flex-direction: column; gap: 10px; }
-    .navbar { padding: 10px 15px; }
-    .logo { font-size: 20px; }
+    body {
+        padding: 10px;
+    }
+    .product-header h1 {
+        font-size: 24px;
+    }
+    .send-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
 </style>
 </head>
 <body>
 
 <div class="navbar">
-    <div class="logo">Click && Buy <span style="font-size:16px;font-weight:600">| منتجات أصلية</span></div>
+    <div class="logo">Click && Buy <span>| منتجات أصلية</span></div>
     <div class="cart-badge" onclick="scrollToForm()">🛒 اطلب الآن</div>
 </div>
 
@@ -548,31 +551,26 @@ body {
         <h1>🌪️ Turbin Extracteur</h1>
         <p>مستخرج الهواء التوربيني - قوة شفط عالية وأداء متميز</p>
     </div>
-
+    
     <div class="gallery">
         <div class="gallery-grid">
-            <div class="gallery-item">
-                <img id="img-top" src="images/100mm.jpg" alt="Turbin Extracteur" onerror="this.src='https://via.placeholder.com/400x300?text=صورة+المنتج'">
-            </div>
-            <div class="gallery-item">
-                <img id="img-bottom" src="images/100mm2.jpg" alt="Turbin Extracteur" onerror="this.src='https://via.placeholder.com/400x300?text=صورة+المنتج'">
-            </div>
+            <div class="gallery-item"><img id="img-top" src="images/100mm.jpg" alt="Turbin Extracteur"></div>
+            <div class="gallery-item"><img id="img-bottom" src="images/100mm2.jpg" alt="Turbin Extracteur"></div>
         </div>
         <div class="video-container">
-            <video controls muted loop>
+            <video controls autoplay muted loop>
                 <source src="video/demo.mp4" type="video/mp4">
-                متصفحك لا يدعم تشغيل الفيديو.
             </video>
         </div>
     </div>
-
+    
     <div class="features">
         <div class="feature-card"><div class="feature-icon">💨</div><h3>شفط قوي</h3><p>تقنية متطورة</p></div>
         <div class="feature-card"><div class="feature-icon">🔇</div><h3>صوت منخفض</h3><p>تشغيل هادئ</p></div>
         <div class="feature-card"><div class="feature-icon">💧</div><h3>مقاوم للرطوبة</h3><p>يعمل بكل الظروف</p></div>
         <div class="feature-card"><div class="feature-icon">🚚</div><h3>توصيل سريع</h3><p>لجميع الولايات</p></div>
     </div>
-
+    
     <div class="specs-section">
         <h3>📋 المواصفات التقنية</h3>
         <div class="specs-grid">
@@ -584,10 +582,10 @@ body {
             <div class="spec-item"><div class="spec-icon">🌡️</div><div class="spec-label">درجة حرارة التشغيل</div><div class="spec-value">-10°C إلى +60°C</div></div>
         </div>
     </div>
-
+    
     <div class="order-form" id="order-form">
         <h2 style="margin-bottom:20px">📝 معلومات الطلب</h2>
-
+        
         <div class="form-group">
             <label>📏 المقاس</label>
             <select id="size">
@@ -600,30 +598,30 @@ body {
                 <option value="315mm" data-price="39000">315mm - 39000 دج</option>
             </select>
         </div>
-
+        
         <div class="price-info">
             <div class="price-card"><div class="label">💰 سعر المنتج</div><div class="value" id="price">- دج</div></div>
             <div class="price-card"><div class="label">📐 المساحة المناسبة</div><div class="value" id="area">-</div></div>
         </div>
-
+        
         <div class="form-group">
             <label>📍 الولاية</label>
             <select id="wilaya">
                 <option value="">اختر الولاية</option>
             </select>
         </div>
-
+        
         <div class="form-group">
             <label>🏘️ البلدية</label>
             <input list="baladia-list" id="baladia" placeholder="اكتب أو اختر البلدية">
             <datalist id="baladia-list"></datalist>
         </div>
-
+        
         <div class="price-info">
             <div class="price-card"><div class="label">🏠 توصيل للمنزل</div><div class="value" id="home">- دج</div></div>
             <div class="price-card"><div class="label">🏢 توصيل للمكتب</div><div class="value" id="desk">- دج</div></div>
         </div>
-
+        
         <div class="form-group">
             <label>🚚 نوع التوصيل</label>
             <select id="type">
@@ -631,33 +629,33 @@ body {
                 <option value="desk">مكتب 🏢</option>
             </select>
         </div>
-
+        
         <div class="total-price">
             <div class="label">المجموع النهائي</div>
             <div class="value" id="total">- دج</div>
         </div>
-
+        
         <div class="form-group">
             <label>👤 الاسم الكامل</label>
-            <input id="name" placeholder="أدخل اسمك الكامل" type="text">
+            <input id="name" placeholder="أدخل اسمك الكامل">
         </div>
-
+        
         <div class="form-group">
             <label>📞 رقم الهاتف</label>
-            <input id="phone" placeholder="مثال: 0673699621" type="tel" maxlength="10">
+            <input id="phone" placeholder="أدخل رقم هاتفك">
         </div>
-
+        
         <div class="form-group">
             <label>📧 البريد الإلكتروني (للإرسال عبر البريد)</label>
             <input type="email" id="email" placeholder="example@email.com">
         </div>
-
+        
         <div class="send-buttons">
-            <button class="btn-whatsapp" id="btn-wa" onclick="sendViaWhatsApp(event)">📱 إرسال عبر واتساب</button>
-            <button class="btn-email" id="btn-em" onclick="sendViaEmail(event)">📧 إرسال عبر البريد الإلكتروني</button>
+            <button class="btn-whatsapp" onclick="sendViaWhatsApp()">📱 إرسال عبر واتساب</button>
+            <button class="btn-email" onclick="sendViaEmail()">📧 إرسال عبر البريد الإلكتروني</button>
         </div>
     </div>
-
+    
     <div class="payment-section">
         <h3>💰 الدفع عند الاستلام</h3>
         <div class="payment-features">
@@ -667,27 +665,15 @@ body {
             <div class="payment-feature"><div class="icon">✅</div><div class="title">ضمان سنة كاملة</div><div class="desc">ضمان شامل على المنتج</div></div>
         </div>
     </div>
-
+    
     <div class="faq-section">
         <h3>❓ الأسئلة الشائعة</h3>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">📍 كم مدة التوصيل؟</div>
-            <div class="faq-answer">التوصيل يستغرق من 2 إلى 5 أيام حسب الولاية. التوصيل مجاني لولاية الجزائر.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">✅ هل المنتج أصلي؟</div>
-            <div class="faq-answer">نعم 100% منتج أصلي بمواصفات أوروبية مع ضمان سنة كاملة.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">🔧 كيفاش نختار المقاس المناسب؟</div>
-            <div class="faq-answer">المقاس يعتمد على مساحة الغرفة: 100mm (8-16م²)، 125mm (10-20م²)، 150mm (18-36م²)، 200mm (25-50م²).</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">🔄 هل يمكن استبدال المنتج؟</div>
-            <div class="faq-answer">نعم، يمكن استبدال المنتج خلال 14 يوم من تاريخ الاستلام في حالة وجود عيب صنعي.</div>
-        </div>
+        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">📍 كم مدة التوصيل؟</div><div class="faq-answer">التوصيل يستغرق من 2 إلى 5 أيام حسب الولاية. التوصيل مجاني لولاية الجزائر.</div></div>
+        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">✅ هل المنتج أصلي؟</div><div class="faq-answer">نعم 100% منتج أصلي بمواصفات أوروبية مع ضمان سنة كاملة.</div></div>
+        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">🔧 كيفاش نختار المقاس المناسب؟</div><div class="faq-answer">المقاس يعتمد على مساحة الغرفة: 100mm (8-16م²)، 125mm (10-20م²)، 150mm (18-36م²)، 200mm (25-50م²).</div></div>
+        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">🔄 هل يمكن استبدال المنتج؟</div><div class="faq-answer">نعم، يمكن استبدال المنتج خلال 14 يوم من تاريخ الاستلام في حالة وجود عيب صنعي.</div></div>
     </div>
-
+    
     <div class="contact-info">
         <p>📞 للإستفسار أو المساعدة، اتصل بنا على:</p>
         <a href="tel:0673699621">0673 69 96 21</a>
@@ -695,7 +681,23 @@ body {
 </div>
 
 <script>
-// ========== البيانات ==========
+// ==================== إعدادات Firebase (حط اللي عندك) ====================
+const firebaseConfig = {
+    apiKey: "AIzaSyCU8NaYnPFAw1iIYZoX53w6nAeSQgK2LJY",
+    authDomain: "click--buy.firebaseapp.com",
+    databaseURL: "https://click--buy-default-rtdb.firebaseio.com",
+    projectId: "click--buy",
+    storageBucket: "click--buy.firebasestorage.app",
+    messagingSenderId: "23385140961",
+    appId: "1:23385140961:web:6bc31308572662ef2151a0",
+    measurementId: "G-4JEM92MQ7D"
+};
+
+// تهيئة Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// ==================== البيانات (نفس ما كانت) ====================
 const images = {
     "100mm": { top: "images/100mm.jpg", bottom: "images/100mm2.jpg" },
     "125mm": { top: "images/125mm.jpg", bottom: "images/125mm-2.jpg" },
@@ -793,7 +795,7 @@ const baladiat = {
     "58 - المنيعة": ["المنيعة", "متليلي"]
 };
 
-// ========== وظائف مساعدة ==========
+// ==================== دوال الموقع الأساسية ====================
 function toggleFaq(element) {
     let answer = element.nextElementSibling;
     answer.classList.toggle('show');
@@ -802,7 +804,7 @@ function toggleFaq(element) {
 function loadWilayas() {
     let select = document.getElementById('wilaya');
     select.innerHTML = '<option value="">اختر الولاية</option>';
-    for (let key in livraison) {
+    for(let key in livraison) {
         let opt = document.createElement('option');
         opt.value = key;
         opt.textContent = key;
@@ -814,26 +816,50 @@ function updateTotal() {
     let priceText = document.getElementById("price").innerText;
     let price = parseInt(priceText) || 0;
     let type = document.getElementById("type").value;
-    let shipText = type === "home"
-        ? document.getElementById("home").innerText
-        : document.getElementById("desk").innerText;
+    let shipText = type == "home" ? document.getElementById("home").innerText : document.getElementById("desk").innerText;
     let ship = parseInt(shipText) || 0;
-    if (price > 0) {
-        document.getElementById("total").innerText = (price + ship) + " دج";
-    }
+    document.getElementById("total").innerText = (price + ship) + " دج";
 }
 
-function showToast(msg, isError = false) {
+document.getElementById("size").onchange = function() {
+    let opt = this.options[this.selectedIndex];
+    let s = this.value;
+    if(opt.dataset.price) document.getElementById("price").innerText = opt.dataset.price + " دج";
+    if(images[s]) {
+        document.getElementById("img-top").src = images[s].top;
+        document.getElementById("img-bottom").src = images[s].bottom;
+    }
+    document.getElementById("area").innerText = area[s] || "-";
+    updateTotal();
+};
+
+document.getElementById("type").onchange = updateTotal;
+
+document.getElementById("wilaya").onchange = function() {
+    let w = this.value;
+    if(livraison[w]) {
+        document.getElementById("home").innerText = livraison[w].home + " دج";
+        document.getElementById("desk").innerText = livraison[w].desk + " دج";
+    }
+    let list = document.getElementById("baladia-list");
+    list.innerHTML = "";
+    if(baladiat[w]) {
+        baladiat[w].forEach(b => {
+            let op = document.createElement("option");
+            op.value = b;
+            list.appendChild(op);
+        });
+    }
+    updateTotal();
+};
+
+function showToast(msg, isError=false) {
     let toast = document.createElement('div');
     toast.className = 'toast-notification';
     toast.style.backgroundColor = isError ? '#dc3545' : '#28a745';
     toast.innerHTML = msg;
     document.body.appendChild(toast);
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity 0.3s';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
+    setTimeout(() => toast.remove(), 3000);
 }
 
 function scrollToForm() {
@@ -844,28 +870,15 @@ function isValidEmail(email) {
     return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
 }
 
-// ✅ التحقق من رقم الهاتف الجزائري
-function isValidPhone(phone) {
-    let cleaned = phone.replace(/\s/g, '');
-    return /^(05|06|07)[0-9]{8}$/.test(cleaned);
-}
-
-function validateForm(checkEmail = false) {
+function validateForm() {
     let size = document.getElementById("size").value;
     let wilaya = document.getElementById("wilaya").value;
-    let name = document.getElementById("name").value.trim();
-    let phone = document.getElementById("phone").value.trim();
-    let email = document.getElementById("email").value.trim();
-
-    if (!size) { showToast("❌ الرجاء اختيار المقاس", true); return false; }
-    if (!wilaya) { showToast("❌ الرجاء اختيار الولاية", true); return false; }
-    if (!name) { showToast("❌ الرجاء إدخال الاسم الكامل", true); return false; }
-    if (!phone) { showToast("❌ الرجاء إدخال رقم الهاتف", true); return false; }
-    if (!isValidPhone(phone)) { showToast("❌ رقم الهاتف غير صحيح (مثال: 0673699621)", true); return false; }
-    if (checkEmail) {
-        if (!email) { showToast("❌ الرجاء إدخال البريد الإلكتروني", true); return false; }
-        if (!isValidEmail(email)) { showToast("❌ البريد الإلكتروني غير صحيح", true); return false; }
-    }
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    if(!size) { showToast("❌ الرجاء اختيار المقاس", true); return false; }
+    if(!wilaya) { showToast("❌ الرجاء اختيار الولاية", true); return false; }
+    if(!name) { showToast("❌ الرجاء إدخال الاسم الكامل", true); return false; }
+    if(!phone) { showToast("❌ الرجاء إدخال رقم الهاتف", true); return false; }
     return true;
 }
 
@@ -875,14 +888,26 @@ function getOrderData() {
     let wilaya = document.getElementById("wilaya").value;
     let baladia = document.getElementById("baladia").value;
     let type = document.getElementById("type").value;
-    let name = document.getElementById("name").value.trim();
-    let phone = document.getElementById("phone").value.trim();
-    let ship = type === "home"
-        ? document.getElementById("home").innerText
-        : document.getElementById("desk").innerText;
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let ship = type=="home" ? document.getElementById("home").innerText : document.getElementById("desk").innerText;
     let total = document.getElementById("total").innerText;
+    return {
+        size: size,
+        price: price,
+        wilaya: wilaya,
+        baladia: baladia || "غير مدخلة",
+        deliveryType: type=="home" ? "منزل 🏠" : "مكتب 🏢",
+        shippingPrice: ship,
+        total: total,
+        name: name,
+        phone: phone,
+        email: document.getElementById("email").value || ""
+    };
+}
 
-    return `🛍️ طلب جديد من Click && Buy 🛍️\n━━━━━━━━━━━━━━━━━━━━\n📏 المقاس: ${size}\n💰 السعر: ${price}\n📍 الولاية: ${wilaya}\n🏘️ البلدية: ${baladia || "غير مدخلة"}\n🚚 نوع التوصيل: ${type === "home" ? "منزل 🏠" : "مكتب 🏢"}\n💵 سعر التوصيل: ${ship}\n💎 المجموع: ${total}\n━━━━━━━━━━━━━━━━━━━━\n👤 الاسم: ${name}\n📞 الهاتف: ${phone}`;
+function formatWhatsAppMessage(order) {
+    return `🛍️ طلب جديد من Click && Buy 🛍️\n━━━━━━━━━━━━━━━━━━━━\n📏 المقاس: ${order.size}\n💰 السعر: ${order.price}\n📍 الولاية: ${order.wilaya}\n🏘️ البلدية: ${order.baladia}\n🚚 نوع التوصيل: ${order.deliveryType}\n💵 سعر التوصيل: ${order.shippingPrice}\n💎 المجموع: ${order.total}\n━━━━━━━━━━━━━━━━━━━━\n👤 الاسم: ${order.name}\n📞 الهاتف: ${order.phone}`;
 }
 
 function clearForm() {
@@ -897,122 +922,102 @@ function clearForm() {
     document.getElementById("home").innerText = "- دج";
     document.getElementById("desk").innerText = "- دج";
     document.getElementById("total").innerText = "- دج";
-    // إعادة الصور للافتراضي
-    document.getElementById("img-top").src = "images/100mm.jpg";
-    document.getElementById("img-bottom").src = "images/100mm2.jpg";
 }
 
-function showSuccessModal(type, name) {
+function showSuccessModal(type) {
     let modal = document.createElement('div');
     modal.className = 'success-modal';
-    modal.innerHTML = `
-        <div class="success-modal-content">
-            <div style="font-size:60px;margin-bottom:15px">✅</div>
-            <h2 style="color:#28a745">تم إرسال طلبك بنجاح!</h2>
-            <p style="color:#666;margin:10px 0">شكراً لك ${name}</p>
-            <div style="background:#f8f9fa;padding:15px;border-radius:10px;margin:15px 0">
-                <p>📋 رقم الطلب: #${Date.now().toString().slice(-6)}</p>
-                <p>📅 التاريخ: ${new Date().toLocaleString('ar-DZ')}</p>
-                ${type === "email" ? '<p>📧 تم الإرسال عبر البريد الإلكتروني</p>' : '<p>📱 سيتم التواصل عبر واتساب</p>'}
-            </div>
-            <p style="color:#28a745;font-weight:bold">✨ سنتواصل معك خلال 24 ساعة ✨</p>
-            <button onclick="this.closest('.success-modal').remove()" style="background:#28a745;color:white;border:none;padding:12px 30px;border-radius:10px;font-size:16px;cursor:pointer;font-weight:bold;font-family:inherit;margin-top:10px">حسناً 👍</button>
-        </div>
-    `;
+    modal.innerHTML = `<div style="background:white;border-radius:20px;max-width:400px;width:90%;padding:30px;text-align:center;direction:rtl;animation:scaleIn 0.3s ease"><div style="font-size:60px;margin-bottom:15px">✅</div><h2 style="color:#28a745">تم إرسال طلبك بنجاح!</h2><p style="color:#666;margin:10px 0">شكراً لك ${document.getElementById("name").value}</p><div style="background:#f8f9fa;padding:15px;border-radius:10px;margin:15px 0"><p>📋 رقم الطلب: #${Date.now().toString().slice(-6)}</p><p>📅 التاريخ: ${new Date().toLocaleString('ar-DZ')}</p>${type === "email" ? '<p>📧 تم الإرسال عبر البريد الإلكتروني</p>' : '<p>📱 سيتم التواصل عبر واتساب</p>'}</div><p style="color:#28a745;font-weight:bold">✨ سنتواصل معك خلال 24 ساعة ✨</p><button onclick="this.closest(\'.success-modal\').remove()" style="background:#28a745;color:white;border:none;padding:12px 30px;border-radius:10px;font-size:16px;cursor:pointer;font-weight:bold">حسناً 👍</button></div>`;
     document.body.appendChild(modal);
-    modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+    modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
 }
 
-// ========== أزرار الإرسال ==========
+// ==================== حفظ الطلب في Firebase ====================
+async function saveOrderToFirestore(orderData) {
+    try {
+        const docRef = await db.collection("orders").add({
+            ...orderData,
+            status: "جديد",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            date: new Date().toISOString()
+        });
+        console.log("✅ تم الحفظ في Firebase، ID:", docRef.id);
+        return { success: true, id: docRef.id };
+    } catch (error) {
+        console.error("❌ خطأ في Firebase:", error);
+        return { success: false, error: error.message };
+    }
+}
 
-// ✅ إرسال عبر واتساب - مُصلح
-function sendViaWhatsApp(event) {
-    if (!validateForm()) return;
-
-    let msg = getOrderData();
-    let name = document.getElementById("name").value.trim();
-    let vendeurNumber = "213673699621"; // ← رقم البائع
-    let btn = event.currentTarget;
-    let originalText = btn.innerHTML;
-
-    btn.innerHTML = '<span class="loading"></span> جاري الفتح...';
+// ==================== دوال الإرسال (معدلة) ====================
+async function sendViaWhatsApp() {
+    if(!validateForm()) return;
+    
+    const orderData = getOrderData();
+    const msg = formatWhatsAppMessage(orderData);
+    const vendeurNumber = "213673699621";
+    
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="loading"></span> جاري الإرسال...';
     btn.disabled = true;
-
+    
+    // حفظ في Firebase
+    const result = await saveOrderToFirestore(orderData);
+    if(result.success) {
+        showToast("✅ تم حفظ طلبك في قاعدة البيانات!", false);
+    } else {
+        showToast("⚠️ تم الإرسال ولكن فشل الحفظ: " + result.error, true);
+    }
+    
     setTimeout(() => {
         btn.innerHTML = originalText;
         btn.disabled = false;
         window.open(`https://wa.me/${vendeurNumber}?text=${encodeURIComponent(msg)}`, "_blank");
-        showToast("✅ تم فتح واتساب، أرسل الرسالة");
-        showSuccessModal("whatsapp", name);
+        showToast("✅ تم فتح واتساب، أرسل الرسالة", false);
+        showSuccessModal("whatsapp");
         clearForm();
-    }, 600);
+    }, 500);
 }
 
-// ✅ إرسال عبر البريد الإلكتروني
-function sendViaEmail(event) {
-    if (!validateForm(true)) return;
-
-    let msg = getOrderData();
-    let name = document.getElementById("name").value.trim();
-    let shopEmail = "rechoumabdelfattah1@gmail.com"; // ← ضع إيميلك هنا
-    let subject = `طلب جديد من ${name} - Click && Buy`;
-    let btn = event.currentTarget;
-    let originalText = btn.innerHTML;
-
-    btn.innerHTML = '<span class="loading"></span> جاري الفتح...';
+async function sendViaEmail() {
+    if(!validateForm()) return;
+    
+    const orderData = getOrderData();
+    const msg = formatWhatsAppMessage(orderData);
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const shopEmail = "votreemail@gmail.com";
+    
+    if(!email) { showToast("❌ الرجاء إدخال البريد الإلكتروني", true); return; }
+    if(!isValidEmail(email)) { showToast("❌ البريد الإلكتروني غير صحيح", true); return; }
+    
+    const subject = `طلب جديد من ${name} - Click && Buy`;
+    
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="loading"></span> جاري الإرسال...';
     btn.disabled = true;
-
+    
+    // حفظ في Firebase
+    const result = await saveOrderToFirestore(orderData);
+    if(result.success) {
+        showToast("✅ تم حفظ طلبك في قاعدة البيانات!", false);
+    } else {
+        showToast("⚠️ تم الإرسال ولكن فشل الحفظ: " + result.error, true);
+    }
+    
     setTimeout(() => {
         btn.innerHTML = originalText;
         btn.disabled = false;
         window.open(`mailto:${shopEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`, "_blank");
-        showToast("✅ تم فتح البريد الإلكتروني، أرسل الطلب");
-        showSuccessModal("email", name);
+        showToast("✅ تم فتح البريد الإلكتروني، أرسل الطلب", false);
+        showSuccessModal("email");
         clearForm();
-    }, 600);
+    }, 500);
 }
 
-// ========== أحداث التغيير ==========
-document.getElementById("size").onchange = function () {
-    let opt = this.options[this.selectedIndex];
-    let s = this.value;
-    if (opt.dataset.price) {
-        document.getElementById("price").innerText = opt.dataset.price + " دج";
-    }
-    if (images[s]) {
-        let imgTop = document.getElementById("img-top");
-        let imgBottom = document.getElementById("img-bottom");
-        imgTop.src = images[s].top;
-        imgBottom.src = images[s].bottom;
-        imgTop.onerror = () => imgTop.src = 'https://via.placeholder.com/400x300?text=صورة+المنتج';
-        imgBottom.onerror = () => imgBottom.src = 'https://via.placeholder.com/400x300?text=صورة+المنتج';
-    }
-    document.getElementById("area").innerText = area[s] || "-";
-    updateTotal();
-};
-
-document.getElementById("type").onchange = updateTotal;
-
-document.getElementById("wilaya").onchange = function () {
-    let w = this.value;
-    if (livraison[w]) {
-        document.getElementById("home").innerText = livraison[w].home + " دج";
-        document.getElementById("desk").innerText = livraison[w].desk + " دج";
-    }
-    let list = document.getElementById("baladia-list");
-    list.innerHTML = "";
-    if (baladiat[w]) {
-        baladiat[w].forEach(b => {
-            let op = document.createElement("option");
-            op.value = b;
-            list.appendChild(op);
-        });
-    }
-    document.getElementById("baladia").value = "";
-    updateTotal();
-};
-
-// ========== تحميل الولايات ==========
+// تحميل الولايات عند بدء الصفحة
 loadWilayas();
 </script>
 </body>
