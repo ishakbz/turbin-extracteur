@@ -2,95 +2,287 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📊 لوحة تحكم Click && Buy</title>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Cairo', 'Tahoma', sans-serif;
+            font-family: 'Cairo', 'Tahoma', 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             direction: rtl;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 20px;
         }
-        .login-container, .dashboard-container {
+
+        /* صفحة تسجيل الدخول */
+        .login-container {
             background: white;
             border-radius: 20px;
-            padding: 30px;
+            padding: 35px;
             width: 90%;
-            max-width: 500px;
+            max-width: 450px;
+            margin: 80px auto;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
-        .dashboard-container {
-            max-width: 1400px;
-            width: 95%;
-            margin: 20px;
+
+        .login-container h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 28px;
         }
-        input {
+
+        .login-container p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .login-container input {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #ddd;
-            border-radius: 10px;
+            padding: 14px 15px;
+            margin: 12px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
             font-size: 16px;
             font-family: inherit;
+            transition: all 0.3s;
         }
-        button {
-            background: #667eea;
+
+        .login-container input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
+
+        .login-container button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-            width: 100%;
+            transition: transform 0.2s;
+            margin-top: 15px;
         }
-        button:hover { opacity: 0.9; }
-        .error { color: red; margin-top: 10px; }
+
+        .login-container button:hover {
+            transform: translateY(-2px);
+        }
+
+        .error-msg {
+            color: #dc3545;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        /* لوحة التحكم */
+        .dashboard-container {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        /* رأس الصفحة */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .user-info span {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        /* العنوان */
+        .dashboard-container h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* زر التحديث */
+        .refresh-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: all 0.2s;
+        }
+
+        .refresh-btn:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+
+        /* الإحصائيات */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-card .number {
+            font-size: 38px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* الجدول */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: 15px;
+            border: 1px solid #eee;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            overflow-x: auto;
-            display: block;
+            min-width: 800px;
         }
+
         th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
+            padding: 14px 12px;
             text-align: right;
+            border-bottom: 1px solid #eee;
         }
-        th { background: #667eea; color: white; }
-        .stats {
-            display: flex;
-            gap: 20px;
-            margin: 20px 0;
-            flex-wrap: wrap;
+
+        th {
+            background: #f8f9fa;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
         }
-        .stat-card {
-            background: #667eea;
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            flex: 1;
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        td {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .status-badge {
+            background: #ffc107;
+            color: #333;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .loading {
             text-align: center;
+            padding: 60px;
+            color: #888;
+            font-size: 16px;
         }
-        .stat-card .number { font-size: 32px; font-weight: bold; }
-        .refresh-btn { background: #28a745; width: auto; display: inline-block; margin: 10px 0; }
-        .logout-btn { background: #dc3545; width: auto; float: left; }
-        .loading { text-align: center; padding: 50px; color: #666; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+
+        /* للشاشات الصغيرة */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .dashboard-container {
+                padding: 20px;
+            }
+            th, td {
+                padding: 10px 8px;
+                font-size: 12px;
+            }
+            .stat-card .number {
+                font-size: 28px;
+            }
+            .dashboard-container h1 {
+                font-size: 22px;
+            }
+        }
     </style>
 </head>
 <body>
 <div id="app"></div>
 
 <script>
+// إعدادات Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyCU8NaYnPFAw1iIYZoX53w6nAeSQgK2LJY",
     authDomain: "click--buy.firebaseapp.com",
@@ -100,25 +292,26 @@ const firebaseConfig = {
     appId: "1:23385140961:web:6bc31308572662ef2151a0"
 };
 
+// تهيئة Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// عرض صفحة تسجيل الدخول
+// ==================== صفحة تسجيل الدخول ====================
 function showLogin(errorMsg = '') {
     document.getElementById('app').innerHTML = `
         <div class="login-container">
             <h2>🔐 لوحة التحكم</h2>
-            <p>أدخل بياناتك للدخول</p>
+            <p>أدخل بياناتك للوصول إلى الطلبات</p>
             <input type="email" id="email" placeholder="البريد الإلكتروني" autocomplete="email">
             <input type="password" id="password" placeholder="كلمة المرور" autocomplete="current-password">
             <button onclick="login()">🚪 تسجيل الدخول</button>
-            ${errorMsg ? `<div class="error">❌ ${errorMsg}</div>` : ''}
+            ${errorMsg ? `<div class="error-msg">❌ ${errorMsg}</div>` : ''}
         </div>
     `;
 }
 
-// تسجيل الدخول
+// ==================== تسجيل الدخول ====================
 async function login() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -136,17 +329,18 @@ async function login() {
         if (error.code === 'auth/user-not-found') msg = 'المستخدم غير موجود';
         else if (error.code === 'auth/wrong-password') msg = 'كلمة المرور غير صحيحة';
         else if (error.code === 'auth/invalid-email') msg = 'البريد الإلكتروني غير صحيح';
+        else if (error.code === 'auth/too-many-requests') msg = 'محاولات كثيرة، حاول لاحقاً';
         showLogin(msg);
     }
 }
 
-// تسجيل الخروج
+// ==================== تسجيل الخروج ====================
 async function logout() {
     await auth.signOut();
     showLogin();
 }
 
-// تحميل لوحة التحكم
+// ==================== عرض لوحة التحكم ====================
 async function loadDashboard() {
     const user = auth.currentUser;
     if (!user) {
@@ -156,23 +350,27 @@ async function loadDashboard() {
     
     document.getElementById('app').innerHTML = `
         <div class="dashboard-container">
-            <div class="header">
-                <div>👋 مرحباً ${user.email}</div>
+            <div class="dashboard-header">
+                <div class="user-info">
+                    👋 مرحباً <span>${user.email}</span>
+                </div>
                 <button class="logout-btn" onclick="logout()">🚪 تسجيل الخروج</button>
             </div>
             <h1>📋 لوحة تحكم الطلبات</h1>
-            <button class="refresh-btn" onclick="loadOrders()">🔄 تحديث</button>
+            <button class="refresh-btn" onclick="loadOrders()">🔄 تحديث الطلبات</button>
             <div class="stats" id="stats">
                 <div class="stat-card"><div class="number" id="totalOrders">0</div><div class="label">إجمالي الطلبات</div></div>
                 <div class="stat-card"><div class="number" id="todayOrders">0</div><div class="label">طلبات اليوم</div></div>
             </div>
-            <div id="ordersTable" class="loading">جاري تحميل الطلبات...</div>
+            <div class="table-wrapper" id="ordersTable">
+                <div class="loading">🔄 جاري تحميل الطلبات...</div>
+            </div>
         </div>
     `;
     await loadOrders();
 }
 
-// جلب الطلبات
+// ==================== جلب الطلبات من Firebase ====================
 async function loadOrders() {
     const ordersDiv = document.getElementById('ordersTable');
     ordersDiv.innerHTML = '<div class="loading">🔄 جاري التحميل...</div>';
@@ -182,6 +380,7 @@ async function loadOrders() {
         const orders = [];
         snapshot.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
         
+        // إحصائيات
         const total = orders.length;
         const today = new Date().toISOString().slice(0, 10);
         const todayCount = orders.filter(o => o.date && o.date.slice(0, 10) === today).length;
@@ -194,34 +393,52 @@ async function loadOrders() {
             return;
         }
         
-        let html = `表格
-            <thead>
-                <tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>المقاس</th><th>الولاية</th><th>المجموع</th><th>التاريخ</th>〈/tr>
-            </thead>
-            <tbody>`;
+        // عرض الجدول
+        let html = ` 
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>الاسم</th>
+                        <th>الهاتف</th>
+                        <th>المقاس</th>
+                        <th>السعر</th>
+                        <th>الولاية</th>
+                        <th>البلدية</th>
+                        <th>المجموع</th>
+                        <th>التاريخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
         
-        orders.forEach((order, i) => {
+        orders.forEach((order, index) => {
             const date = order.date ? new Date(order.date).toLocaleString('ar-DZ') : '-';
-            html += `<tr>
-                <td>${i+1}〈/td>
-                <td>${order.name || '-'}〈/td>
-                <td>${order.phone || '-'}〈/td>
-                <td>${order.size || '-'}〈/td>
-                <td>${order.wilaya || '-'}〈/td>
-                <td>${order.total || '-'}〈/td>
-                <td>${date}〈/td>
-            〈/tr>`;
+            html += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${order.name || '-'}</td>
+                    <td>${order.phone || '-'}</td>
+                    <td>${order.size || '-'}</td>
+                    <td>${order.price || '-'}</td>
+                    <td>${order.wilaya || '-'}</td>
+                    <td>${order.baladia || '-'}</td>
+                    <td>${order.total || '-'}</td>
+                    <td>${date}</td>
+                </tr>
+            `;
         });
         
-        html += `</tbody>${'</table>'}`;
+        html += `</tbody></table>`;
         ordersDiv.innerHTML = html;
         
     } catch (error) {
-        ordersDiv.innerHTML = `<div class="loading">❌ خطأ: ${error.message}</div>`;
+        console.error("خطأ:", error);
+        ordersDiv.innerHTML = `<div class="loading">❌ خطأ في تحميل الطلبات: ${error.message}</div>`;
     }
 }
 
-// مراقبة حالة تسجيل الدخول
+// ==================== مراقبة حالة تسجيل الدخول ====================
 auth.onAuthStateChanged(user => {
     if (user) {
         loadDashboard();
