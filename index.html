@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <script>
+<!-- Meta Pixel Code -->
+<script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -16,6 +17,7 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1537267828102041&ev=PageView&noscript=1"
 /></noscript>
+<!-- End Meta Pixel Code -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Click && Buy | Turbin Extracteur</title>
@@ -1000,6 +1002,7 @@ async function sendViaWhatsApp() {
     setTimeout(() => {
         btn.innerHTML = originalText;
         btn.disabled = false;
+        fbq('track', 'Lead');
         window.open(`https://wa.me/${vendeurNumber}?text=${encodeURIComponent(msg)}`, "_blank");
         showToast("✅ تم فتح واتساب، أرسل الرسالة", false);
         showSuccessModal("whatsapp");
